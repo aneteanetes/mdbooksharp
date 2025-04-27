@@ -14,22 +14,6 @@ List<MdBookExtension> extensions = [
     new WoWPlateExtension(),
 ];
 
-
-var path = "C:\\Users\\anete\\source\\repos\\wow2drusadapt";/* Path.GetFullPath("..\\Book\\");
-var asmname = Assembly.GetEntryAssembly().GetName().Name;
-
-void FindBook()
-{
-    var dir = Directory.GetParent(path);
-    path = dir.FullName;
-    if (dir.Name != asmname)
-        FindBook();
-}
-FindBook();
-
-path = Path.Combine(Directory.GetParent(path).FullName, "Book");
-*/
-
-Book.Load(path)
+Book.Load(args[0])
     .Render(extensions)
     .Build();
