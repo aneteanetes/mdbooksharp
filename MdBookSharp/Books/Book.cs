@@ -156,6 +156,9 @@ namespace MdBookSharp.Books
         {
             var themePath = Path.Combine(book.ProjectPath, "theme");
 
+            if (!Directory.Exists(themePath))
+                return;
+
             foreach (var cssfile in Directory.GetFiles(Path.Combine(themePath,"css"),"*.css", SearchOption.AllDirectories))
             {
                 var path = cssfile.Replace(Path.Combine(book.ProjectPath, "theme"), "");
@@ -322,21 +325,26 @@ namespace MdBookSharp.Books
 
             Console.WriteLine($"Copying theme content ...");
             var root = new DirectoryInfo(ProjectPath).FullName;
-            foreach (var file in Directory.GetFiles(Path.Combine(ProjectPath, "theme"), ".", SearchOption.AllDirectories))
-            {
-                if (Path.GetExtension(file) == ".md")
-                    continue;
+            var themePath = Path.Combine(ProjectPath, "theme");
 
-                var path = Path.Combine(ProjectRootPath, Binpath, file.Replace(root, "").Replace("theme","").Trim('\\'));
-                ValidateDirectory(path);
-                try
+            if (Directory.Exists(themePath))
+            {
+                foreach (var file in Directory.GetFiles(themePath, ".", SearchOption.AllDirectories))
                 {
-                    var bytes = File.ReadAllBytes(file);
-                    File.WriteAllBytes(path, bytes);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
+                    if (Path.GetExtension(file) == ".md")
+                        continue;
+
+                    var path = Path.Combine(ProjectRootPath, Binpath, file.Replace(root, "").Replace("theme", "").Trim('\\'));
+                    ValidateDirectory(path);
+                    try
+                    {
+                        var bytes = File.ReadAllBytes(file);
+                        File.WriteAllBytes(path, bytes);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
             }
 

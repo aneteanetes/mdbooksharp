@@ -56,7 +56,7 @@ namespace MdBookSharp.Search
 
                         idx.doc_urls.Add($"{page.RelativePath.Replace(".md",".html")}#{title}".Replace(" ","-"));
                     }
-                    else
+                    else if (prevSearchDoc !=null)
                     {
                         prevSearchDoc.body += Regex.Replace(node.InnerText, @"\s+", " ");
                     }
