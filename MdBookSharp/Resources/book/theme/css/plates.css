@@ -1,0 +1,409 @@
+.wowhead-tooltip {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    color: #bbb;
+    line-height: 1.4;
+    outline: none;
+    max-height: 1000000px;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow: visible !important;
+    z-index: 100000006;
+    float: left;
+    padding-top: 1px;
+    visibility: visible;
+    width: 100%;
+}
+
+.wowhead-tooltip .wrap-table {
+	    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    color: #bbb;
+    line-height: 1.4;
+    visibility: visible;
+    outline: none;
+    max-height: 1000000px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 0;
+    border: 0 !important;    
+    width: 100%;
+}
+
+.wrap-table .tbody {
+--d4Tooltip-bulletOffset: .1em;
+--d4Tooltip-bulletHeight: 1.25em;
+--d4Tooltip-bulletWidth: 1em;
+--d4Tooltip-listPadding: 1.25em;
+--d4Tooltip-bulletPosition: absolute;
+--d4Tooltip-bulletLeft: -1.25em;
+--textBadge-horizontalGap: 50px;
+-webkit-text-size-adjust: 100%;
+font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+cursor: auto;
+pointer-events: auto;
+color: #bbb;
+line-height: 1.4;
+visibility: visible;
+border-spacing: 0;
+border-collapse: collapse;
+outline: none;
+max-height: 1000000px;
+border: 0 !important;
+}
+
+.wow-tp-td-content {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    visibility: visible;
+    border-spacing: 0;
+    border-collapse: collapse;
+    outline: none;
+    max-height: 1000000px;
+    max-width: 500px;
+    border: 0 !important;
+    background: url(../../images/tooltip.png);
+    color: #fff;
+    font-family: Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 12px;
+    line-height: 17px;
+    padding: 8px 4px 1px 9px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.wow-tp-th-content {
+--d4Tooltip-bulletOffset: .1em;
+--d4Tooltip-bulletHeight: 1.25em;
+--d4Tooltip-bulletWidth: 1em;
+--d4Tooltip-listPadding: 1.25em;
+--d4Tooltip-bulletPosition: absolute;
+--d4Tooltip-bulletLeft: -1.25em;
+--textBadge-horizontalGap: 50px;
+-webkit-text-size-adjust: 100%;
+font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+cursor: auto;
+pointer-events: auto;
+visibility: visible;
+border-spacing: 0;
+border-collapse: collapse;
+outline: none;
+max-height: 1000000px;
+border: 0 !important;
+background: url(../../images/tooltip.png);
+color: #fff;
+font-family: Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+font-size: 12px;
+line-height: 17px;
+padding: 3px;
+vertical-align: top;
+background-position: top right;
+}
+
+.wow-tp-content-title-table {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    visibility: visible;
+    color: #fff;
+    font-family: Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 12px;
+    line-height: 17px;
+    text-align: left;
+    outline: none;
+    max-height: 1000000px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 0;
+    border: 0 !important;
+    width: 100%;
+}
+
+.wow-tp-content-description-table {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    visibility: visible;
+    color: #fff;
+    font-family: Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 12px;
+    line-height: 17px;
+    text-align: left;
+    outline: none;
+    max-height: 1000000px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 0;
+    border: 0 !important;
+    margin-bottom: 5px;
+}
+
+.wow-tp-bottom {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    visibility: visible;
+    border-spacing: 0;
+    border-collapse: collapse;
+    outline: none;
+    max-height: 1000000px;
+    border: 0 !important;
+    background: url(../../images/tooltip.png);
+    color: #fff;
+    font-family: Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 12px;
+    line-height: 17px;
+    padding: 3px;
+    vertical-align: top;
+    background-position: bottom left;
+}
+
+.wow-tp-bottom-corner {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    visibility: visible;
+    border-spacing: 0;
+    border-collapse: collapse;
+    outline: none;
+    max-height: 1000000px;
+    border: 0 !important;
+    background: url(../../images/tooltip.png);
+    color: #fff;
+    font-family: Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 12px;
+    line-height: 17px;
+    padding: 3px;
+    vertical-align: top;
+    background-position: bottom right;
+}
+
+.wow-tp-bottom-tr {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    color: #bbb;
+    line-height: 1.4;
+    visibility: visible;
+    border-spacing: 0;
+    border-collapse: collapse;
+    outline: none;
+    max-height: 1000000px;
+}
+
+.wow-tp-td-content table td {
+    padding: 0;
+    border: none;
+}
+
+.subtype {
+    color: #9d9d9d !important;
+    font-size: 15px;    
+    padding: 3px 0px 3px 0px;
+margin-left: 7.8rem;
+}
+
+.whtt-name {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    visibility: visible;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-family: Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 17px;
+    line-height: 17px;
+    text-align: left;
+    outline: none;
+    max-height: 1000000px;
+    color: inherit;
+    padding-left: 5px;
+}
+
+.wowhead-tooltip .text {
+    color:#ffd100 !important;
+    font-size: 15px;
+}
+
+.wow-icon {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    pointer-events: auto;
+    color: #bbb;
+    line-height: 1.4;
+    outline: none;
+    max-height: 1000000px;
+    float: left;
+    position: relative;
+    width: 6.8rem;
+    height: 6.8rem;
+}
+
+.icon-large {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    color: #bbb;
+    line-height: 1.4;
+    outline: none;
+    max-height: 1000000px;
+    font-family: "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    pointer-events: none;
+    position: relative;
+    z-index: 0;
+}
+
+.wow-icon ins {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    color: #bbb;
+    line-height: 1.4;
+    font-family: "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    pointer-events: none;
+    outline: none;
+    max-height: 1000000px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    z-index: 5;
+    height: 56px;
+    width: 56px;
+    left: 6px;
+    top: 6px;
+    border-radius: 4px;
+    position:absolute;
+}
+
+.wow-icon del {
+    --d4Tooltip-bulletOffset: .1em;
+    --d4Tooltip-bulletHeight: 1.25em;
+    --d4Tooltip-bulletWidth: 1em;
+    --d4Tooltip-listPadding: 1.25em;
+    --d4Tooltip-bulletPosition: absolute;
+    --d4Tooltip-bulletLeft: -1.25em;
+    --textBadge-horizontalGap: 50px;
+    -webkit-text-size-adjust: 100%;
+    font: 14px "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: auto;
+    color: #bbb;
+    line-height: 1.4;
+    font-family: "Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    pointer-events: none;
+    outline: none;
+    max-height: 1000000px;
+    background-repeat: no-repeat;
+    display: block;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    height: 68px;
+    width: 68px;
+    background: url(../../images/iconborder.png);
+    position:absolute;
+}
+
+main {
+    position: relative;
+}
+
+.spell-hr{
+    visibility: hidden;
+}
