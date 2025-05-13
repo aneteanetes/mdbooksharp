@@ -96,7 +96,7 @@ namespace MdBookSharp.Books
                         var manifestwritetime = File.GetLastWriteTime(manifestpath);
                         var summarywritetime = File.GetLastWriteTime(summerypath);
 
-                        if (manifestwritetime == summarywritetime)
+                        if (summarywritetime < manifestwritetime)
                             book.IsNeedGenerateNavBar = false;
 
                         book.Manifest = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(Path.Combine(resultPath, "navbar.manifest")));
