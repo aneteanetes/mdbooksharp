@@ -13,7 +13,7 @@
  * Export code from https://github.com/umdjs/umd/blob/master/returnExports.js
  */
 window.addEventListener("keydown", function (e) {
-    if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+    if (e.ctrlKey && e.keyCode === 70) {
         e.preventDefault();
     }
 })

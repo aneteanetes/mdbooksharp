@@ -54,7 +54,7 @@ namespace MdBookSharp.Search
                             breadcrumbs = GenerateBreadcrumb(book,page,title)
                         });
 
-                        idx.doc_urls.Add($"{page.RelativePath.Replace(".md",".html")}#{title}".Replace(" ","-"));
+                        idx.doc_urls.Add($"{page.Path_Html}#{title}".Replace(" ","-"));
                     }
                     else if (prevSearchDoc !=null)
                     {

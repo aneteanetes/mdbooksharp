@@ -4,40 +4,44 @@
     <!-- Book generated using (almost) mdBook -->
     <meta charset="UTF-8">
     <title>{{{ Name }}} - {{{ Title }}}</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff">
 
     {{#if IsFaviconSvg}}
-    <link rel="icon" href="{{ PathToRoot }}images/favicon.svg">
+    <link rel="icon" href="{{ PathToRoot }}/images/favicon.svg">
     {{/if}}
     {{#if IsFaviconPng}}
-    <link rel="shortcut icon" href="{{ PathToRoot }}images/favicon.png">
+    <link rel="shortcut icon" href="{{ PathToRoot }}/images/favicon.png">
     {{/if}}
-    <link rel="stylesheet" href="{{ PathToRoot }}css/variables.css">
-    <link rel="stylesheet" href="{{ PathToRoot }}css/general.css">
-    <link rel="stylesheet" href="{{ PathToRoot }}css/chrome.css">
+    <link rel="stylesheet" href="{{ PathToRoot }}/css/variables.css">
+    <link rel="stylesheet" href="{{ PathToRoot }}/css/general.css">
+    <link rel="stylesheet" href="{{ PathToRoot }}/css/chrome.css">
     {{#if IsPrintEnable}}
-    <link rel="stylesheet" href="{{ PathToRoot }}css/print.css" media="print">
+    <link rel="stylesheet" href="{{ PathToRoot }}/css/print.css" media="print">
     {{/if}}
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="{{ PathToRoot }}FontAwesome/css/font-awesome.css">
-    <link rel="stylesheet" href="{{ PathToRoot }}fonts/fonts.css">
+    <link rel="stylesheet" href="{{ PathToRoot }}/FontAwesome/css/font-awesome.css">
+    <link rel="stylesheet" href="{{ PathToRoot }}/fonts/fonts.css">
 
     <!-- Highlight.js Stylesheets -->
-    <link rel="stylesheet" href="{{ PathToRoot }}highlight.css">
-    <link rel="stylesheet" href="{{ PathToRoot }}tomorrow-night.css">
-    <link rel="stylesheet" href="{{ PathToRoot }}ayu-highlight.css">
+    <link rel="stylesheet" href="{{ PathToRoot }}/highlight.css">
+    <link rel="stylesheet" href="{{ PathToRoot }}/tomorrow-night.css">
+    <link rel="stylesheet" href="{{ PathToRoot }}/ayu-highlight.css">
 
     <!-- Custom theme stylesheets -->
     {{#each AdditionalCssFiles}}
-    <link rel="stylesheet" href="{{ ../PathToRoot }}{{ this }}">
+    <link rel="stylesheet" href="{{ ../PathToRoot }}/{{ this }}">
     {{/each}}
     <!-- Extensions stylesheets -->
     {{#each ExtensionCssFiles}}
-    <link rel="stylesheet" href="{{ ../PathToRoot }}{{ FileName }}">
+    <link rel="stylesheet" href="{{ ../PathToRoot }}/{{ FileName }}">
     {{/each}}
+
+
+    {{#if IsDev}}
+    <base href="{{ DevRootPath }}">
+    {{/if}}
 
     <!-- Provide site root to javascript -->
     <script>
@@ -218,21 +222,21 @@
 
             </div>
 
-            <script src="{{ PathToRoot }}elasticlunr.js"></script>
-            <script src="{{ PathToRoot }}mark.js"></script>
+            <script src="{{ PathToRoot }}/elasticlunr.js"></script>
+            <script src="{{ PathToRoot }}/mark.js"></script>
             <script>
                 window.search = {};
             </script>
-            <script src="{{ PathToRoot }}searchindex.js"></script>
-            <script src="{{ PathToRoot }}searcher.js"></script>
+            <script src="{{ PathToRoot }}/searchindex.js"></script>
+            <script src="{{ PathToRoot }}/searcher.js"></script>
 
-            <script src="{{ PathToRoot }}clipboard.js"></script>
-            <script src="{{ PathToRoot }}highlight.js"></script>
-            <script src="{{ PathToRoot }}book.js"></script>
+            <script src="{{ PathToRoot }}/clipboard.js"></script>
+            <script src="{{ PathToRoot }}/highlight.js"></script>
+            <script src="{{ PathToRoot }}/book.js"></script>
 
             <!-- Custom JS scripts -->
             {{#each AdditionalJsFiles}}
-            <script src="{{ ../PathToRoot }}{{this}}"></script>
+            <script src="{{ ../PathToRoot }}/{{this}}"></script>
             {{/each}}
 
             {{#if IsPrintEnable}}

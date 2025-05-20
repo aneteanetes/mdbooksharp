@@ -1,4 +1,5 @@
-﻿using MdBookSharp.Books;
+﻿using Geranium.Reflection;
+using MdBookSharp.Books;
 
 namespace MdBookSharp.Extensions.ImageToken
 {
@@ -6,20 +7,32 @@ namespace MdBookSharp.Extensions.ImageToken
     {
         public override void Process(Page file)
         {
-            if (file.MdContent.Contains(Settings.TokenMappings.Select(x => x.Key).ToArray()))
+            if (file.MdContent.ContainsAny(Settings.Tokens.ToArray()))
             {
+                Settings.Tokens.ForEach(token =>
+                {
+                    var imgName = token;
+                    if(Settings.TokenMappings.ContainsKey(token))
+                        imgName = Settings.TokenMappings[token];
+
+                    var renderedimg = Token(Settings.IconSize, file, token, imgName);
+                    file.Html = file.Html.Replace(token, renderedimg);
+                });
+
                 Settings.TokenMappings.ForEach(x =>
                 {
-                    var renderedimg = Token(file,x.Key, x.Value);
+                    var renderedimg = Token(Settings.IconSize, file,x.Key, x.Value);
                     file.Html = file.Html.Replace(x.Key, renderedimg);
                 });
             }
         }
 
-        private string Token(Page page, string tokenName, string img)
+        public static string Token(int size, Page page, string tokenName, string img)
         {
-            var size = Settings.IconSize;
-            return $@"<img width=""{size}"" height=""{size}"" class=""dice"" src=""{page.PathToRoot}images/stats/{img}.png"" alt=""{tokenName}"">";
+            if (img.IsEmpty())
+                return "";
+
+            return $@"<img width='{size}' height='{size}' class='dice' src='{page.PathToRoot}/images/tokens/{img}.png' alt=''>";
         }
     }
 }

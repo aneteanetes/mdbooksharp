@@ -1,4 +1,5 @@
-﻿using Geranium.Reflection;
+﻿using Geranium;
+using Geranium.Reflection;
 using MdBookSharp.Books;
 
 namespace MdBookSharp.Extensions
@@ -13,7 +14,7 @@ namespace MdBookSharp.Extensions
         public override void BindSettings(object settings) => Settings = settings.As<T>();
     }
     
-    internal abstract class MdBookExtension
+    internal abstract class MdBookExtension : ToposortType
     {
         public abstract void Process(Page file);
 

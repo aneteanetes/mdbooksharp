@@ -7,9 +7,9 @@ namespace MdBookSharp.Extensions.MDLinkToHtmlExtension
     {
         public override void Process(Page file)
         {
-            if (file.Html.Contains(".md\">"))
+            if (file.Html.Contains(".md"))
             {
-                file.Html = file.Html.Replace(".md\">", ".html\">");
+                file.Html = file.Html.Replace(".md", ".html");
             }
         }
     }

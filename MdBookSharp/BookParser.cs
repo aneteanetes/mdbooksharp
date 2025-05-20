@@ -2,13 +2,17 @@
 using MdBookSharp.Books;
 using System.Text.RegularExpressions;
 
-namespace MdBookSharp.MdBook
+namespace MdBookSharp
 {
-    internal class SummaryParser
+    internal class BookParser
     {
         public static Book Parse(string path)
         {
-            var content = File.ReadAllLines(path);
+            Console.WriteLine("Parsing summary.md...");
+
+            var summaryPath = Path.Combine(path, "SUMMARY.md");
+
+            var content = File.ReadAllLines(summaryPath);
             var book = new Book();
             book.Title = content[0].Replace("#", "").Trim();
 
@@ -27,9 +31,13 @@ namespace MdBookSharp.MdBook
                 if (line.IsEmpty())
                     continue;
 
-                Page page = new();
+                Page page = new()
+                {
+                    Book = book
+                };
 
-                Console.WriteLine($"Parsing {Array.IndexOf(content, line)} page of {content.Length - 1}...");
+                if (prev != null)
+                    page.Prev = prev;
 
                 if (line.Contains("#"))
                 {
@@ -49,18 +57,27 @@ namespace MdBookSharp.MdBook
                 var to = line.IndexOf("]") - from;
                 page.Name = line.Substring(from, to);
 
+                bool urlExists = false;
+
                 from = line.IndexOf("(") + 1;
                 if (from > 0)
                 {
                     to = line.IndexOf(")") - from;
+
+                    //////////////path
+                    urlExists = true;
+
                     page.Path = line.Substring(from, to);
+                    page.Path_Html = page.Path.Replace(".md", ".html");
+                    page.PathToRoot = Path.GetRelativePath(page.Path_Html, "./")
+                        .Replace("\\", "/");
+                    page.PathToRoot = page.PathToRoot.Substring(1);
                 }
 
                 page.IsCounted = line.Contains("-");
                 page.IsCollapsible = line.Contains("+");
 
                 var layer = page.Level = Regex.Matches(line, "   ").Count;
-
 
                 if (layer > currentLevel)
                 {
@@ -74,7 +91,9 @@ namespace MdBookSharp.MdBook
                 }
                 else if (layer < currentLevel)
                 {
-                    levels.Pop();
+                    if (levels.Count>0)
+                        levels.Pop();
+                    
                     if (page.IsCounted)
                     {
                         prefixes.RemoveAt(prefixes.Count - 1);
@@ -107,7 +126,18 @@ namespace MdBookSharp.MdBook
                 if (levels.Count > 0)
                     page.Parent = levels.Peek();
 
-                prev = page;
+                if (prev != null && urlExists)
+                {
+                    prev.Next = page;
+                }
+
+                if (urlExists)
+                {
+                    prev = page;
+                    page.PathPhysical = page.Path.Replace("./", path);
+                    page.MdContent = File.ReadAllText(page.PathPhysical);
+                }
+
                 book.Pages.Add(page);
             }
 

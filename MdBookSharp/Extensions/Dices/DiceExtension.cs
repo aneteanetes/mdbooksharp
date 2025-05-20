@@ -15,20 +15,19 @@ namespace MdBookSharp.Extensions.Dices
                     if (d == Dices.Dice.dPercent)
                         diceToken = "d%";
 
-                    var diceRender = Dice(file, d);
+                    var diceRender = Dice(file, d, Settings.IconSize);
                     file.Html = file.Html.Replace(diceToken.ToString(), diceRender);
                 });
             }
         }
 
-        private string Dice(Page page, Dice dice)
+        public static string Dice(Page page, Dice dice, int size)
         {
             var diceImageName = dice.ToString();
             if (dice == Dices.Dice.dPercent)
                 diceImageName = "d%";
 
-            var size = Settings.IconSize;
-            return $@"<img width=""{size}"" height=""{size}"" class=""dice"" src=""{page.PathToRoot}images/dices/{diceImageName}.png"" alt=""{diceImageName}"">";
+            return $@"<img width=""{size}"" height=""{size}"" class=""dice"" src=""{page.PathToRoot}/images/dices/di{diceImageName.Substring(1)}.png"">";
         }
     }
 }

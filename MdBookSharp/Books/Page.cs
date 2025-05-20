@@ -12,9 +12,8 @@ namespace MdBookSharp.Books
         private string DEBUGVIEW => Name == null ? "Delimiter" : $@"{Name} {Path}";
 
         public string IsActive { get; set; }
-        public string Name { get; set; }
 
-        public string PathToRoot { get; set; }
+        public string Name { get; set; }
 
         public string FileNameWithoutExtension
         {
@@ -28,15 +27,17 @@ namespace MdBookSharp.Books
         }
         private string fileNameWithoutExtension;
 
+        public string PathToRoot { get; set; }
+
         public string Path { get; set; }
+
+        public string Path_Html { get; set; }
+
+        public string PathPhysical { get; set; }
 
         public string[] ExtensionCssFiles { get; set; } = [];
 
-        public string RelativePath { get; set; }
-
         public string Url { get; set; }
-
-        public string RelativePathHtml => System.IO.Path.GetFileNameWithoutExtension(RelativePath) + ".html";
 
         public bool IsCounted { get; set; } = true;
 
@@ -54,9 +55,9 @@ namespace MdBookSharp.Books
 
         public string InnerText { get; set; }
 
-        public string Prev { get; set; }
+        public Page Prev { get; set; }
 
-        public string Next { get; set; }
+        public Page Next { get; set; }
 
         public int Level { get; set; }
 
@@ -64,13 +65,15 @@ namespace MdBookSharp.Books
 
         public bool IsRendered { get; set; }
 
-        public bool IsPrevExists => Prev.IsNotEmpty();
+        public bool IsPrevExists => Prev != null;
 
-        public bool IsNextExists => Next.IsNotEmpty();
+        public bool IsNextExists => Next != null;
 
         public HtmlDocument HtmlDocument { get; internal set; }
 
         public Page Parent { get; set; }
         public bool IsDelimiter { get; internal set; }
+
+        public Book Book { get; set; }
     }
 }

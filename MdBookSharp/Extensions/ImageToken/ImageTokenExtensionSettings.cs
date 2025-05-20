@@ -2,15 +2,9 @@
 {
     internal class ImageTokenExtensionSettings
     {
-        public Dictionary<string, string> TokenMappings = new()
-        {
-            {"СИЛ","str" },
-            {"ЛВК","agi" },
-            {"ИНТ","int" },
-            {"ВЫН","end" },
-            {"ДУХ","spr" },
-            {"ХАР","cha" },
-        };
+        public List<string> Tokens = [];
+
+        public Dictionary<string, string> TokenMappings = [];
 
         public int IconSize { get; set; } = 24;
     }
