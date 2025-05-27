@@ -59,8 +59,7 @@ namespace MdBookSharp
 
         public string Build(Page renderingPage)
         {
-
-            var result = NavBarTemplate.Replace("{" + renderingPage.Name + "Url}", @""" class=""active""");
+            var result = NavBarTemplate.Replace("{" + renderingPage.Name + "Url}", @" class=""active""");
 
             foreach (var page in Book.Pages)
             {

@@ -40,7 +40,7 @@ namespace MdBookSharp
 
             foreach (var page in book.Pages)
             {
-                if (page.MdContent.IsEmpty())
+                if (page.Path.IsEmpty())
                     continue;
 
                 page.Html = Markdown.ToHtml(page.MdContent, pipeline);
@@ -61,11 +61,14 @@ namespace MdBookSharp
         /// </summary>
         private static void RenderPages(Book book)
         {
+
             var template = EmbeddedResources.GetEmbeddedFileContent("page.hbs");
             var bindHtml = Handlebars.Compile(template);
 
+            Console.WriteLine("Building navbar...");
             var navbarBuilder = new NavbarBuilder(book);
 
+            Console.WriteLine("Rendering pages...");
             foreach (var page in book.Pages)
             {
                 if (page.Path.IsEmpty())
@@ -76,7 +79,6 @@ namespace MdBookSharp
                 if (book.IsNeedGenerateNavBar)
                 {
                     nav = navbarBuilder.Build(page);
-                    //BuildNavbar(page);
                     book.Manifest[page.Path] = nav;
                 }
                 else
