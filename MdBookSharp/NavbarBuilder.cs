@@ -82,9 +82,16 @@ namespace MdBookSharp
             if (relativeToPage == null || pagePath == null || relativeToPage == pagePath || relativeToPage.Path == null || pagePath.Path == null)
                 return null;
 
-            return Path.GetRelativePath(relativeToPage.Path_Html, pagePath.Path_Html)
-                    .Replace("\\", "/")
-                    .Substring(3);
+            var pathRel = Path.GetRelativePath(relativeToPage.Path_Html, pagePath.Path_Html)
+                    .Replace("\\", "/");
+
+            if(pathRel.Length>1)
+                    return pathRel.Substring(3);
+
+            if (pathRel == ".")
+                return "./index.html";
+
+            return pathRel;
         }
     }
 }

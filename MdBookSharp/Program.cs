@@ -4,6 +4,7 @@ using MdBookSharp.Extensions;
 using MdBookSharp.Extensions.Dices;
 using MdBookSharp.Extensions.ImageToken;
 using MdBookSharp.Extensions.MDLinkToHtmlExtension;
+using MdBookSharp.Extensions.NavbarImage;
 using MdBookSharp.Extensions.Searching;
 using MdBookSharp.Extensions.WowIcons;
 using MdBookSharp.Extensions.WoWPlates;
@@ -16,7 +17,8 @@ List<MdBookExtension> extensions = [
     new WoWIconExtension(),
     new DiceExtension(),
     new ImageTokenExtension(),
-    new MDLinkToHtmlExtension()
+    new MDLinkToHtmlExtension(),
+    new NavbarImageExtension()
 ];
 
 Console.WriteLine("Loading book...");

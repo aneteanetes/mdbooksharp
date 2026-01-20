@@ -7,6 +7,7 @@ namespace MdBookSharp.Extensions
     internal abstract class MdBookExtension<T> : MdBookExtension
         where T : class, new()
     {
+
         public T Settings { get; set; } = new T();
 
         public override Type GetSettingsType() => typeof(T);
@@ -16,6 +17,8 @@ namespace MdBookSharp.Extensions
     
     internal abstract class MdBookExtension : ToposortType
     {
+        public virtual bool IsGlobal => false;
+
         public abstract void Process(Page file);
 
         public abstract Type GetSettingsType();

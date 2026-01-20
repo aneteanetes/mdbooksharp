@@ -49,19 +49,18 @@ namespace MdBookSharp
                 htmlDoc.LoadHtml(page.Html);
                 page.HtmlDocument = htmlDoc;
 
-                extensions.ForEach(extension => extension.Process(page));
+                extensions.Where(x=>!x.IsGlobal).ForEach(extension => extension.Process(page));
                 page.IsRendered = true;
             }
 
-            RenderPages(book);
+            RenderPages(book, extensions.Where(x=>x.IsGlobal));
         }
 
         /// <summary>
         /// Рендер страниц в шаблон
         /// </summary>
-        private static void RenderPages(Book book)
+        private static void RenderPages(Book book, IEnumerable<MdBookExtension> globalExtensions)
         {
-
             var template = EmbeddedResources.GetEmbeddedFileContent("page.hbs");
             var bindHtml = Handlebars.Compile(template);
 
@@ -83,7 +82,7 @@ namespace MdBookSharp
                 }
                 else
                 {
-                    nav = book.Manifest[page.Path];
+                    nav = book.Manifest[page.PathPhysical];
                 }
 
                 page.Content = bindHtml.Invoke(new
@@ -108,6 +107,11 @@ namespace MdBookSharp
                     book.AdditionalJsFiles,
                     book.IsPrintEnable,
                 });
+
+                foreach (var globalExt in globalExtensions)
+                {
+                    globalExt.Process(page);
+                }
             }
 
         }
