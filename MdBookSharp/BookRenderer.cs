@@ -82,7 +82,7 @@ namespace MdBookSharp
                 }
                 else
                 {
-                    nav = book.Manifest[page.PathPhysical];
+                    nav = book.Manifest[page.Path];
                 }
 
                 page.Content = bindHtml.Invoke(new
