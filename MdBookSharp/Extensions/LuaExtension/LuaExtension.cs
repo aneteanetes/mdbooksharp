@@ -45,7 +45,7 @@ namespace MdBookSharp.Extensions.LuaScriptExtension
                     var str = val.CastToString();
                     return str;
                 }
-                catch
+                catch (Exception ex)
                 {
                     ConsoleLog.Error(key);
                     throw;
@@ -67,7 +67,7 @@ namespace MdBookSharp.Extensions.LuaScriptExtension
                     var str = val.CastToString();
                     return str;
                 }
-                catch
+                catch (Exception ex)
                 {
                     ConsoleLog.Error(code);
                     throw;
@@ -76,7 +76,7 @@ namespace MdBookSharp.Extensions.LuaScriptExtension
             return processed;
         }
 
-        [GeneratedRegex(@"//%[\w.]+(\(\))?")]
+        [GeneratedRegex(@"//%[\w.\[\]]+(\(\))?")]
         private static partial Regex VariableRegexp();
 
         [GeneratedRegex(@"//%.*")]
