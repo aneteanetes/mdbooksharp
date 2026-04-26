@@ -1,11 +1,13 @@
 ﻿using Geranium.Reflection;
 using MdBookSharp.Search;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 
 namespace MdBookSharp.Books
 {
     internal class Configuration
     {
+        public bool Exceptions { get; set; } = false;
+
         public bool IsClearFolder { get; set; } = true;
 
         public bool IsIncrementalBuild { get; set; } = false;
@@ -14,7 +16,7 @@ namespace MdBookSharp.Books
 
         public ResultOptions SearchResultOptions { get; set; }
 
-        public Dictionary<string,JObject> Extensions { get; set; }
+        public Dictionary<string, JsonNode> Extensions { get; set; }
 
         public bool IsDev { get; set; }
 

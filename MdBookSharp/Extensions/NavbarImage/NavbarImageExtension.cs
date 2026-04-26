@@ -3,7 +3,7 @@ using MdBookSharp.Books;
 
 namespace MdBookSharp.Extensions.NavbarImage
 {
-    internal class NavbarImageExtension : MdBookExtension<NavbarImageCfg>
+    internal class NavbarImageExtension : MdBookExtension<FragmentsExtensionConfig>
     {
         public override bool IsGlobal => true;
 

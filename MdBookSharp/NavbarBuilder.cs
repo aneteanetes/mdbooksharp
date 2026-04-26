@@ -12,10 +12,10 @@ namespace MdBookSharp
         public NavbarBuilder(Book book)
         {
             Book = book;
-            Initialize();
+            NavbarRender();
         }
 
-        private void Initialize()
+        private void NavbarRender()
         {
             int level = 0;
 
@@ -30,7 +30,7 @@ namespace MdBookSharp
                 var li = string.Empty;
 
                 if (page.Path.IsEmpty())
-                    li = $"<li class=\"chapter-item expanded affix \">\r\n<li class=\"part-title\">{page.Name}</li>";
+                    li = $"<li class=\"chapter-item expanded affix \">\r\n<li class=\"part-title\">{(page.IsCounted ? page.Number+"." : "")}{page.Name}</li>";
                 else
                     li = NavbarItemTemplate(page);
 
@@ -51,7 +51,7 @@ namespace MdBookSharp
         }
 
         private string NavbarItemTemplate(Page page) => $@"<li class=""chapter-item expanded"">
-    <a href=""{{{page.Name}Url}}"">"
+    <a href=""{{{page.Id}Url}}"">"
             + (page.IsCounted ? $@"<strong aria-hidden=""true"">{page.Number}.</strong>" : "")
             + page.Name + @"
     </a>
@@ -59,7 +59,7 @@ namespace MdBookSharp
 
         public string Build(Page renderingPage)
         {
-            var result = NavBarTemplate.Replace("{" + renderingPage.Name + "Url}", @""" class=""active""");
+            var result = NavBarTemplate.Replace("{" + renderingPage.Id + "Url}", @""" class=""active""");
 
             foreach (var page in Book.Pages)
             {
@@ -68,10 +68,7 @@ namespace MdBookSharp
 
                 var url = GetRelativePath(renderingPage, page);
 
-                //url = url.Replace(".md", ".html")
-                //    .Replace("\\", "/");
-
-                result = result.Replace("{" + page.Name + "Url}", url);
+                result = result.Replace("{" + page.Id + "Url}", url);
             }
 
             return result;

@@ -1,14 +1,17 @@
 ﻿using Geranium.Reflection;
+using Markdig;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 using MdBookSharp.Books;
 using System.Text.RegularExpressions;
 
 namespace MdBookSharp
 {
-    internal class BookParser
+    internal partial class BookParser
     {
         public static Book Parse(string path)
         {
-            Console.WriteLine("Parsing summary.md...");
+            ConsoleLog.WriteLine("Parsing summary.md...");
 
             var summaryPath = Path.Combine(path, "SUMMARY.md");
 
@@ -17,6 +20,7 @@ namespace MdBookSharp
             book.Title = content[0].Replace("#", "").Trim();
 
             Page prev = null;
+            Page prevCounted = null;
 
             int rootCounter = 1;
             int counter = 0;
@@ -59,6 +63,9 @@ namespace MdBookSharp
 
                 bool urlExists = false;
 
+                page.IsCounted = line.Contains("-");
+                page.IsCollapsible = line.Contains("+");
+
                 from = line.IndexOf("(") + 1;
                 if (from > 0)
                 {
@@ -73,18 +80,19 @@ namespace MdBookSharp
                         .Replace("\\", "/");
                     page.PathToRoot = page.PathToRoot.Substring(1);
                 }
+                else
+                {
+                    //page.IsCounted = false;
+                }
 
-                page.IsCounted = line.Contains("-");
-                page.IsCollapsible = line.Contains("+");
-
-                var layer = page.Level = Regex.Matches(line, "   ").Count;
+                var layer = page.Level = line.TakeWhile(c => c == ' ').Count() / 2; 
 
                 if (layer > currentLevel)
                 {
-                    levels.Push(prev);
+                    levels.Push(prevCounted);
                     if (page.IsCounted)
                     {
-                        prefixes.Add(prev.Number);
+                        prefixes.Add(prevCounted.Number);
                         currentLevel = layer;
                         levelCounters[layer] = counter;
                     }
@@ -134,8 +142,13 @@ namespace MdBookSharp
                 if (urlExists)
                 {
                     prev = page;
+                    prevCounted = page;
                     page.PathPhysical = page.Path.Replace("./", path);
                     page.MdContent = File.ReadAllText(page.PathPhysical);
+                }
+                else
+                {
+                    prevCounted = page;
                 }
 
                 book.Pages.Add(page);

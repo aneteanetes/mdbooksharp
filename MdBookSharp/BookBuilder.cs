@@ -1,6 +1,7 @@
 ﻿using Geranium.Reflection;
 using Geranium.ResourceManager;
 using MdBookSharp.Books;
+using MdBookSharp.Extensions;
 using MdBookSharp.Resources;
 using MdBookSharp.Search;
 using Newtonsoft.Json;
@@ -12,9 +13,9 @@ namespace MdBookSharp
         /// <summary>
         /// Сохраняет файлы
         /// </summary>
-        public static void Build(Book book)
+        public static void Build(Book book, List<MdBookExtension> extensions)
         {
-            Console.WriteLine("Writing book...");
+            ConsoleLog.WriteLine("Writing book...");
 
             var searchIndexJson = SearchIndexBuilder.BuildIndex(book);
 
@@ -36,7 +37,49 @@ namespace MdBookSharp
                 WritePage(book, page);
             }
 
-            Console.WriteLine($"Copying embedded 'book' content...");
+            ConsoleLog.WriteLine($"Assembly static html extensions...");
+            var staticHtmlExtensions = extensions.Where(ext => ext.IsStaticHtmlApplicable).ToArray();
+
+            ConsoleLog.WriteLine($"Copying html pages...");
+            foreach (var file in Directory.GetFiles(book.ProjectPath, "*.html", SearchOption.AllDirectories))
+            {
+                var resultPath = Path.Combine(book.ProjectBinPath, file.Replace(book.ProjectPath, ""));
+
+                if (file.Contains("/theme/"))
+                    continue;
+
+                ValidateDirectory(resultPath);
+
+                if (staticHtmlExtensions.IsEmpty())
+                {
+                    File.Copy(file, resultPath, true);
+                }
+                else
+                {
+                    var fileText = File.ReadAllText(file);
+                    foreach (var ext in staticHtmlExtensions)
+                    {
+                        try
+                        {
+                            fileText = ext.ProcessStaticHtml(fileText);
+                        }
+                        catch (Exception)
+                        {
+                            if (book.Configuration.Exceptions)
+                            {
+                                throw;
+                            }
+                            else
+                            {
+                                ConsoleLog.Error($"{ext.GetType().Name} error.");
+                            }
+                        }
+                    }
+                    File.WriteAllText(resultPath, fileText);
+                }
+            }
+
+            ConsoleLog.WriteLine($"Copying embedded 'book' content...");
             foreach (var file in EmbeddedResources.GetEmbeddedFolder("book"))
             {
                 var path = Path.Combine(book.ProjectRootPath, book.Binpath, file.FileName);
@@ -45,16 +88,17 @@ namespace MdBookSharp
                 File.WriteAllBytes(path, file.Content.ToArray());
             }
 
-            Console.WriteLine($"Copying extensions content...");
+            ConsoleLog.WriteLine($"Copying extensions content...");
             foreach (var file in EmbeddedResources.GetEmbeddedFolder("extensions.css"))
             {
+                Console.WriteLine(file);
                 var path = Path.Combine(book.ProjectRootPath, book.Binpath, file.FileName);
                 ValidateDirectory(path);
 
                 File.WriteAllBytes(path, file.Content.ToArray());
             }
 
-            Console.WriteLine($"Writing images...");
+            ConsoleLog.WriteLine($"Writing images...");
             if (book.Configuration.IsIncrementalBuild)
             {
                 CopyImageThemeFilesByTracking(book);
@@ -64,7 +108,7 @@ namespace MdBookSharp
                 CopyImagesAndThemeNOTIncremental(book);
             }
 
-            Console.WriteLine($"Writing manifest...");
+            ConsoleLog.WriteLine($"Writing manifest...");
 
             var summaryfilepath = Path.Combine(book.ProjectPath, "SUMMARY.md");
             ValidateDirectory(summaryfilepath);
@@ -89,7 +133,7 @@ namespace MdBookSharp
 
         private static void CopyImagesAndThemeNOTIncremental(Book book)
         {
-            Console.WriteLine($"Copying images ...");
+            ConsoleLog.WriteLine($"Copying images ...");
             foreach (var image in Directory.GetFiles(Path.Combine(book.ProjectPath, "images"), ".", SearchOption.AllDirectories))
             {
                 var path = Path.Combine(book.ProjectRootPath, book.Binpath, image.Replace(book.ProjectPath, ""));
@@ -98,7 +142,7 @@ namespace MdBookSharp
 
             }
 
-            Console.WriteLine($"Copying theme content ...");
+            ConsoleLog.WriteLine($"Copying theme content ...");
             var root = new DirectoryInfo(book.ProjectPath).FullName;
             var themePath = Path.Combine(book.ProjectPath, "theme");
 

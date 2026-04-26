@@ -1,7 +1,9 @@
 ﻿using MdBookSharp.Resources;
+using System.Diagnostics;
 
 namespace MdBookSharp.Books
 {
+    [DebuggerDisplay("{ProjectRootPath}")]
     internal partial class Book
     {
         public string Title { get; set; }
@@ -25,8 +27,6 @@ namespace MdBookSharp.Books
         public List<Page> Pages { get; set; } = new();
 
         public List<Page> PagesHierarchy { get; set; } = new();
-
-        public string RenderedNavbar { get; set; }
 
         public string ProjectPath { get; set; }
 

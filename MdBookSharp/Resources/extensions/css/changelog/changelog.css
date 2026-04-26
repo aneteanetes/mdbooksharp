@@ -1,0 +1,139 @@
+.layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.updates-panel {
+    border-left: 2px solid rgba(166, 124, 82, 0.4);
+    padding-left: 35px;
+    margin-left: 10px;
+    min-width: 300px;
+}
+
+    .updates-panel h3 {
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0 0 30px 0;
+        color: var(--fg);
+    }
+
+.update-item {
+    margin-bottom: 30px;
+    position: relative;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--fg);
+}
+
+    .update-item::before {
+        content: '';
+        position: absolute;
+        left: -41.5px;
+        top: 10px;
+        width: 11px;
+        height: 11px;
+        background: #a67c52;
+        transform: rotate(45deg);
+    }
+
+.update-date {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    color: #8b5e34;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.all-updates {
+    display: inline-block;
+    font-size: 17px;
+    font-weight: bold;
+    color: #a67c52;
+    text-decoration: underline;
+    margin-bottom: 0;
+}
+
+.contacts-block {
+    padding-top: 30px;
+    border-top: 1px solid rgba(166, 124, 82, 0.2);
+}
+
+.contacts-label {
+    font-size: 15px;
+    margin-bottom: 15px;
+    display: block;
+    font-style: italic;
+}
+
+.contacts-links {
+    display: flex;
+    gap: 25px;
+}
+
+    .contacts-links a {
+        font-size: 24px;
+        text-decoration: none;
+    }
+
+@media (min-width: 1024px) {
+    .layout-wrapper {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .updates-panel {
+        max-width: 350px;
+        position: sticky;
+        top: 20px;
+    }
+}
+
+
+.updates-panel h3 {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 35px 0;
+    color: #4a4a4a;
+    font-weight: bold;
+}
+
+.update-item {
+    margin-bottom: 35px;
+    position: relative;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--fg);
+}
+
+.update-date {
+    display: block;
+    font-weight: bold;
+    font-size: 13px;
+    color: #8b5e34;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+}
+
+.contacts-block {
+    margin-top: 60px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(166, 124, 82, 0.15);
+}
+
+.contacts-label {
+    font-size: 14px;
+    margin-bottom: 20px;
+    display: block;
+    opacity: 0.6;
+    text-transform: lowercase;
+    font-variant: small-caps;
+}
+
+.changelog-main > :first-child {
+    margin-top: 0;
+}

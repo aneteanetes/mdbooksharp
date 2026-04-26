@@ -1,12 +1,12 @@
 ﻿using MdBookSharp.Books;
 using MdBookSharp.Resources;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace MdBookSharp
 {
     internal class BookLoader
     {
-        public static Book Load(string path)
+        public static Book Load(string path, bool isDebug)
         {
             var rootpath = path;
 
@@ -22,13 +22,22 @@ namespace MdBookSharp
             book.DevRootPath = Path.Combine(rootpath, book.Binpath) + "/";
             book.DevRootPath = book.DevRootPath.Replace("\\", "/");
 
+            ConsoleLog.WriteLine("Read settings...");
+
             var settingsPath = Path.Combine(path, "settings.json");
             if (File.Exists(settingsPath))
-                book.Configuration = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(settingsPath));
+            {
+                using var stream = File.OpenRead(settingsPath);
+                book.Configuration = JsonSerializer.Deserialize<Configuration>(stream);
+            }
 
             if (book.Configuration.IsIncrementalBuild)
                 book.Configuration.IsClearFolder = false;
 
+            if (isDebug && book.Configuration != null)
+                book.Configuration.Exceptions = isDebug;
+
+            ConsoleLog.WriteLine("Read/Write manifest...");
             var resultPath = Path.Combine(book.ProjectRootPath, book.Binpath);
             if (Directory.Exists(resultPath))
             {
@@ -44,7 +53,8 @@ namespace MdBookSharp
                         if (summarywritetime < manifestwritetime)
                             book.IsNeedGenerateNavBar = false;
 
-                        book.Manifest = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(resultPath, "navbar.manifest")));
+                        using var manifestStream = File.OpenRead(Path.Combine(resultPath, "navbar.manifest"));
+                        book.Manifest = JsonSerializer.Deserialize<Dictionary<string, string>>(manifestStream);
                     }
                 }
                 else if (book.Configuration.IsClearFolder)
@@ -58,6 +68,7 @@ namespace MdBookSharp
             if (!book.IsFaviconSvg)
                 book.IsFaviconPng = Path.GetExtension(favicon) == ".png";
 
+            ConsoleLog.WriteLine("Process other files...");
             ProcessAdditionalFiles(book);
 
             book.ExtensionCssFiles = EmbeddedResources.GetEmbeddedFolder("extensions.css");

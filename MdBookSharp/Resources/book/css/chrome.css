@@ -526,7 +526,7 @@ ul#searchresults span.teaser em {
 
 /* collapse the section */
 .chapter li:not(.expanded) + li > ol {
-    display: none;
+    /*display: none;*/
 }
 
 .chapter li.chapter-item {

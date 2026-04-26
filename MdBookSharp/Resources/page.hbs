@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
     {{#if IsFaviconSvg}}
     <link rel="icon" href="{{ PathToRoot }}/images/favicon.svg">
     {{/if}}
@@ -46,7 +49,7 @@
     <!-- Provide site root to javascript -->
     <script>
             var path_to_root = "{{ PathToRoot }}/";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "{{ preferred_dark_theme }}" : "{{ DefaultTheme }}";
+        var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "{{ DefaultTheme }}";
     </script>
 </head>
     <body>

@@ -1,5 +1,6 @@
 ﻿using Geranium;
 using Geranium.Reflection;
+using Markdig;
 using MdBookSharp.Books;
 
 namespace MdBookSharp.Extensions
@@ -19,10 +20,20 @@ namespace MdBookSharp.Extensions
     {
         public virtual bool IsGlobal => false;
 
+        public virtual bool IsStaticHtmlApplicable => false;
+
+        public Book Book { get; set; }
+
         public abstract void Process(Page file);
+
+        public virtual string ProcessMd(Page file, string md) => md;
+
+        public virtual string ProcessStaticHtml(string content) => content;
 
         public abstract Type GetSettingsType();
 
         public abstract void BindSettings(object settings);
+
+        public virtual void Init(Book book, MarkdownPipeline pipeline) { }
     }
 }

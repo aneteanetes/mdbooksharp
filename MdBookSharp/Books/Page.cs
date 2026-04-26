@@ -13,6 +13,8 @@ namespace MdBookSharp.Books
 
         public string IsActive { get; set; }
 
+        public string Id => $"{Name}#{Path}";
+
         public string Name { get; set; }
 
         public string FileNameWithoutExtension

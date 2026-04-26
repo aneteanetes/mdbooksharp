@@ -6,6 +6,7 @@ using MdBookSharp.Books;
 using MdBookSharp.Extensions;
 using MdBookSharp.Resources;
 using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace MdBookSharp
 {
@@ -18,7 +19,12 @@ namespace MdBookSharp
         /// <returns></returns>
         public static void Render(Book book, List<MdBookExtension> extensions)
         {
-            Console.WriteLine("Rendering book...");
+            ConsoleLog.WriteLine("Rendering book...");
+
+            var pipelineBuilder = new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions()
+                .UsePipeTables();
+            var pipeline = pipelineBuilder.Build();
 
             foreach (var extension in extensions)
             {
@@ -27,21 +33,38 @@ namespace MdBookSharp
                 if (book.Configuration.Extensions.ContainsKey(extName))
                 {
                     var node = book.Configuration.Extensions[extName];
-                    var settings = JsonConvert.DeserializeObject(node.ToString(), cfgType);
+                    var settings = node.Deserialize(cfgType);// JsonConvert.DeserializeObject(node.ToString(), cfgType);
                     extension.BindSettings(settings);
                     book.Configuration.SettingsDictionary.Add(cfgType, settings);
                 }
+                extension.Init(book, pipeline);
             }
 
-            var pipelineBuilder = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
-                .UsePipeTables();
-            var pipeline = pipelineBuilder.Build();
+            ConsoleLog.WriteLine("Extensions initialized...");
 
             foreach (var page in book.Pages)
             {
                 if (page.Path.IsEmpty())
                     continue;
+
+                extensions.Where(x => !x.IsGlobal)
+                    .ForEach(extension => {
+                        try
+                        {
+                            page.MdContent = extension.ProcessMd(page, page.MdContent);
+                        }
+                        catch (Exception)
+                        {
+                            if (book.Configuration.Exceptions)
+                            {
+                                throw;
+                            }
+                            else
+                            {
+                                ConsoleLog.Error($"{extension.GetType().Name} error.");
+                            }
+                        }
+                    });
 
                 page.Html = Markdown.ToHtml(page.MdContent, pipeline);
 
@@ -49,9 +72,27 @@ namespace MdBookSharp
                 htmlDoc.LoadHtml(page.Html);
                 page.HtmlDocument = htmlDoc;
 
-                extensions.Where(x=>!x.IsGlobal).ForEach(extension => extension.Process(page));
+                extensions.Where(x=>!x.IsGlobal).ForEach(extension => {
+                    try
+                    {
+                        extension.Process(page);
+                    }
+                    catch (Exception)
+                    {
+                        if (book.Configuration.Exceptions)
+                        {
+                            throw;
+                        }
+                        else
+                        {
+                            ConsoleLog.Error($"{extension.GetType().Name} error.");
+                        }
+                    }
+                });
                 page.IsRendered = true;
             }
+
+            ConsoleLog.WriteLine("Page rendering...");
 
             RenderPages(book, extensions.Where(x=>x.IsGlobal));
         }
@@ -64,10 +105,10 @@ namespace MdBookSharp
             var template = EmbeddedResources.GetEmbeddedFileContent("page.hbs");
             var bindHtml = Handlebars.Compile(template);
 
-            Console.WriteLine("Building navbar...");
+            ConsoleLog.WriteLine("Building navbar...");
             var navbarBuilder = new NavbarBuilder(book);
 
-            Console.WriteLine("Rendering pages...");
+            ConsoleLog.WriteLine("Rendering pages...");
             foreach (var page in book.Pages)
             {
                 if (page.Path.IsEmpty())
@@ -110,10 +151,23 @@ namespace MdBookSharp
 
                 foreach (var globalExt in globalExtensions)
                 {
-                    globalExt.Process(page);
+                    try
+                    {
+                        globalExt.Process(page);
+                    }
+                    catch
+                    {
+                        if (book.Configuration.Exceptions)
+                        {
+                            throw;
+                        }
+                        else
+                        {
+                            ConsoleLog.Error($"{globalExt.GetType().Name} error.");
+                        }
+                    }
                 }
             }
-
         }
 
     }

@@ -1,7 +1,6 @@
 ﻿using Geranium.Reflection;
 using HtmlAgilityPack;
 using MdBookSharp.Books;
-using MdBookSharp.Extensions.Dices;
 using MdBookSharp.Extensions.ImageToken;
 using System.Text.RegularExpressions;
 
