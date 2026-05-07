@@ -40,7 +40,6 @@ namespace MdBookSharp.Extensions.LuaScriptExtension
                 string key = match.Value.Replace("//%", ""); 
                 try
                 {
-
                     var val = script.DoString($"return {key}");
                     var str = val.CastToString();
                     return str;
@@ -76,10 +75,7 @@ namespace MdBookSharp.Extensions.LuaScriptExtension
             return processed;
         }
 
-        [GeneratedRegex(@"//%[\w.\[\]]+(\(\))?")]
+        [GeneratedRegex(@"//%(?:\((.*)\)|([\w.\[\]]+(?:\(\))?))")]
         private static partial Regex VariableRegexp();
-
-        [GeneratedRegex(@"//%.*")]
-        private static partial Regex StaticLuaRegexp();
     }
 }
