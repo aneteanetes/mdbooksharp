@@ -43,7 +43,7 @@ namespace MdBookSharp.Extensions.ChangelogExtensions
         {
             string md = $"# {this.Settings.FullchangeText}";
 
-            foreach (var entry in _changeLog)
+            foreach (var entry in _changeLog.Reverse())
             {
                 md += $@"
 ### {entry.When}
