@@ -1,9 +1,5 @@
 ﻿using Geranium.Reflection;
-using Markdig;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
 using MdBookSharp.Books;
-using System.Text.RegularExpressions;
 
 namespace MdBookSharp
 {
@@ -83,6 +79,13 @@ namespace MdBookSharp
                 else
                 {
                     //page.IsCounted = false;
+                }
+
+                var targetFrom = line.IndexOf("{");
+                if (targetFrom > 0)
+                {
+                    var targetTo = line.IndexOf("}") - from;
+                    page.Target = line.Substring(from, to);
                 }
 
                 var layer = page.Level = line.TakeWhile(c => c == ' ').Count() / 2; 

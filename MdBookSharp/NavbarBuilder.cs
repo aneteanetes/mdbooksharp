@@ -51,7 +51,7 @@ namespace MdBookSharp
         }
 
         private string NavbarItemTemplate(Page page) => $@"<li class=""chapter-item expanded"">
-    <a href=""{{{page.Id}Url}}"">"
+    <a href=""{{{page.Id}Url}}"" {(page.Target.IsNotEmpty() ? "target='"+page.Target+"'" : "")}>"
             + (page.IsCounted ? $@"<strong aria-hidden=""true"">{page.Number}.</strong>" : "")
             + page.Name + @"
     </a>

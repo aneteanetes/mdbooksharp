@@ -33,6 +33,8 @@ namespace MdBookSharp.Books
 
         public string Path { get; set; }
 
+        public string Target { get; set; }
+
         public string Path_Html { get; set; }
 
         public string PathPhysical { get; set; }
