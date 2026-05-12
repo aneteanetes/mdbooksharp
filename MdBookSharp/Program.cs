@@ -11,6 +11,7 @@ using MdBookSharp.Extensions.Searching;
 using MdBookSharp.Extensions.WowIcons;
 using MdBookSharp.Extensions.WoWPlates;
 using MdBookSharp.Extensions.WrappedTable;
+using System.Diagnostics;
 
 ConsoleLog.WriteLine("Loading book...");
 
@@ -41,4 +42,6 @@ if (args.ElementAtOrDefault(1) != default)
 var book = BookLoader.Load(args[0], isDebug);
 BookRenderer.Render(book, extensions);
 BookBuilder.Build(book, extensions);
-Console.WriteLine();
+
+double elapsedMs = Stopwatch.GetElapsedTime(ConsoleLog.started, Stopwatch.GetTimestamp()).TotalMilliseconds;
+Console.WriteLine($"Done... [{elapsedMs} ms]");

@@ -22,6 +22,8 @@ namespace MdBookSharp.Books
 
         public bool IsFaviconPng { get; set; }
 
+        public string FaviconExt { get; set; }
+
         public string Language { get; set; } = "ru";
 
         public List<Page> Pages { get; set; } = new();

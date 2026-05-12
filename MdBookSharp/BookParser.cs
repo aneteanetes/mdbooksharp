@@ -26,10 +26,15 @@ namespace MdBookSharp
             Dictionary<int, int> levelCounters = new();
             Stack<Page> levels = new Stack<Page>();
 
-            foreach (var line in content.Skip(1).ToArray())
+            foreach (var entry in content.Skip(1).ToArray())
             {
-                if (line.IsEmpty())
+                if (entry.IsEmpty())
                     continue;
+
+                var comment = entry.IndexOf("//");
+                var line = comment > 0
+                    ? entry.Substring(0, entry.IndexOf("//"))
+                    : entry;
 
                 Page page = new()
                 {

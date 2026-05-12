@@ -4,6 +4,8 @@ namespace MdBookSharp
 {
     internal static class ConsoleLog
     {
+        public static long started = Stopwatch.GetTimestamp();
+
         private static long _lastTick = Stopwatch.GetTimestamp();
 
         public static bool WriteLine(string text)
@@ -11,7 +13,9 @@ namespace MdBookSharp
             long currentTick = Stopwatch.GetTimestamp();
             double elapsedMs = Stopwatch.GetElapsedTime(_lastTick, currentTick).TotalMilliseconds;
 
-            Console.WriteLine($"{text} [{elapsedMs:F2} ms]");
+            double elapsedAll = Stopwatch.GetElapsedTime(started, currentTick).TotalMilliseconds;
+
+            Console.WriteLine($"{text} [{elapsedMs:F2} ms] ({elapsedAll:F2} ms)");
 
             _lastTick = currentTick;
 

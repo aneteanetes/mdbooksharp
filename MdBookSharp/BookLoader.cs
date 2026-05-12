@@ -1,4 +1,5 @@
-﻿using MdBookSharp.Books;
+﻿using Geranium.Reflection;
+using MdBookSharp.Books;
 using MdBookSharp.Resources;
 using System.Text.Json;
 
@@ -64,9 +65,14 @@ namespace MdBookSharp
             }
 
             var favicon = Directory.GetFiles(path, "favicon*", SearchOption.AllDirectories).LastOrDefault();
+
             book.IsFaviconSvg = Path.GetExtension(favicon) == ".svg";
+
             if (!book.IsFaviconSvg)
                 book.IsFaviconPng = Path.GetExtension(favicon) == ".png";
+
+            if (favicon.IsNotEmpty())
+                book.FaviconExt = Path.GetExtension(favicon);
 
             ConsoleLog.WriteLine("Process other files...");
             ProcessAdditionalFiles(book);

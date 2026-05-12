@@ -70,12 +70,12 @@ namespace MdBookSharp.Extensions.LuaScriptExtension
                 {
                     ConsoleLog.Error(code);
                     throw;
-                } 
+                }
             });
             return processed;
         }
 
-        [GeneratedRegex(@"//%(?:\((.*)\)|([\w.\[\]]+(?:\(\))?))")]
+        [GeneratedRegex(@"//%(?<value>\S*?(\((?>[^()]+|\((?<D>)|\)(?<-D>))*(?(D)(?!))\)|(?=\s|$)))")]
         private static partial Regex VariableRegexp();
     }
 }

@@ -32,7 +32,7 @@ namespace MdBookSharp
                 File.WriteAllText(path, firstPage.Content);
             }
 
-            foreach (var page in book.Pages.Where(x => x.Path.IsNotEmpty()))
+            foreach (var page in book.Pages.Where(x => x.Path.IsNotEmpty() && !x.Path.EndsWith("html")))
             {
                 WritePage(book, page);
             }
