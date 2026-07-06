@@ -3,8 +3,134 @@ using MdBookSharp.Books;
 
 namespace MdBookSharp
 {
-    internal partial class BookParser
+    internal partial class SummaryParser
     {
+        public static Book CsParse(string path)
+        {
+            ConsoleLog.WriteLine("Parsing summary.md...");
+
+            var summaryPath = Path.Combine(path, "SUMMARY.md");
+
+            var content = File.ReadAllLines(summaryPath);
+            var book = new Book();
+            book.Title = content[0].Replace("#", "").Trim();
+
+            Menu prevMenu = null;
+            Page prev = null;
+
+            int bookCounter = 0;
+
+            foreach (var entry in content.Skip(1).ToArray())
+            {
+                if (entry.IsEmpty() || entry.StartsWith('#'))
+                    continue;
+
+                var comment = entry.IndexOf("//");
+                var line = comment > 0
+                    ? entry.Substring(0, entry.IndexOf("//"))
+                    : entry;
+
+                if (line.Trim() == "---")
+                {
+                    book.Menu.Add(new Menu(book)
+                    {
+                        Type = MenuType.Delimiter
+                    });
+                    continue;
+                }
+
+                var menu = new Menu(book);
+
+                bool isCounted = line.Trim().StartsWith("-");
+
+                if (line.IndexOf("(") == -1)
+                {
+                    menu.Type = MenuType.Static;
+                }
+                if (line.Contains("+"))
+                {
+                    menu.Type = MenuType.Collapsible;
+                }
+
+                var from = line.IndexOf("[") + 1;
+                var to = line.IndexOf("]") - from;
+                menu.Text = line.Substring(from, to);
+
+                from = line.IndexOf("(") + 1;
+                if (from > 0)
+                {
+                    to = line.IndexOf(")") - from;
+
+                    menu.Page = new()
+                    {
+                        Book = book,
+                        Name = menu.Text
+                    };
+
+                    if (prev != null)
+                        menu.Page.Prev = prev;
+
+                    menu.Page.Path = line.Substring(from, to);
+                    menu.Page.Path_Html = menu.Page.Path.Replace(".md", ".html");
+                    menu.Page.PathToRoot = Path.GetRelativePath(menu.Page.Path_Html, "./").Replace("\\", "/");
+                    menu.Page.PathToRoot = menu.Page.PathToRoot.Substring(1);
+                    menu.Page.PathPhysical = menu.Page.Path.Replace("./", path);
+
+                    menu.Page.MdContent = File.ReadAllText(menu.Page.PathPhysical);
+
+                    if (prev != null)
+                    {
+                        prev.Next = menu.Page;
+                    }
+
+                        prev = menu.Page;
+                }
+
+                // <a target=""/>
+                var linkTarget = line.IndexOf("{");
+                if (linkTarget > 0)
+                {
+                    var targetTo = line.IndexOf("}") - from;
+                    menu.Page.Target = line.Substring(from, to);
+                }
+
+                var level = line.TakeWhile(c => c == ' ').Count() / 2;
+                menu.Level = level;
+
+                if(level == 0)
+                {
+                    if (isCounted)
+                    {
+                        bookCounter++;
+                        menu.Number = bookCounter.ToString();
+                    }
+
+                    book.Menu.Add(menu);
+                }
+                else if (level == prevMenu?.Level)
+                {
+                    if (isCounted)
+                    {
+                        menu.Number = prevMenu.Parent.GetNextChildNumber();
+                    }
+                    prevMenu.Parent.AddChild(menu);
+                }
+                else
+                {
+                    var last = book.FlatMenu.LastOrDefault(x => x.Level == menu.Level - 1);
+                    if (isCounted)
+                        menu.Number = last.GetNextChildNumber();
+                    last.AddChild(menu);
+                }
+
+                prevMenu = menu;
+            }
+
+            book.Pages = book.FlatMenu.Where(x => x.Page != null).Select(x => x.Page).ToList();
+
+            return book;
+        }
+
         public static Book Parse(string path)
         {
             ConsoleLog.WriteLine("Parsing summary.md...");

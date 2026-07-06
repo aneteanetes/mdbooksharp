@@ -28,6 +28,14 @@ namespace MdBookSharp.Books
 
         public List<Page> Pages { get; set; } = new();
 
+        public List<Menu> Menu { get; set; } = new();
+
+        private List<Menu> _menuFlat { get; set; } = new();
+
+        public void FlatMenuAdding(Menu menu) => _menuFlat.Add(menu);
+
+        public IEnumerable<Menu> FlatMenu => _menuFlat;
+
         public List<Page> PagesHierarchy { get; set; } = new();
 
         public string ProjectPath { get; set; }
@@ -41,6 +49,7 @@ namespace MdBookSharp.Books
         public Configuration Configuration;
 
         public bool IsNeedGenerateNavBar { get; set; } = true;
+
         public string ProjectBinPath { get; internal set; }
 
         public Dictionary<string, string> Manifest = new();

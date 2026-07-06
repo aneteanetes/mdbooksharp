@@ -9,63 +9,74 @@ namespace MdBookSharp
 
         public string NavBarTemplate { get; private set; }
 
+        public string NavBarCollapibleStyles { get; private set; }
+
+        public bool IsRendered { get; private set; }
+
         public NavbarBuilder(Book book)
         {
             Book = book;
-            NavbarRender();
+            //NavbarRender();
         }
 
-        private void NavbarRender()
+        public NavbarBuilder Render()
         {
-            int level = 0;
-
-            foreach (var page in Book.Pages)
+            foreach (var menu in Book.Menu)
             {
-                if (page.Name.IsEmpty())
-                {
-                    NavBarTemplate += "<li class=\"spacer\"></li>";
-                    continue;
-                }
+                RenderMenu(menu);
+            }
 
-                var li = string.Empty;
+            this.IsRendered = true;
+            return this;
+        }
 
-                if (page.Path.IsEmpty())
-                    li = $"<li class=\"chapter-item expanded affix \">\r\n<li class=\"part-title\">{(page.IsCounted ? page.Number+"." : "")}{page.Name}</li>";
-                else
-                    li = NavbarItemTemplate(page);
+        private void RenderMenu(Menu menu)
+        {
+            NavBarTemplate += menu.Type == MenuType.Delimiter
+                ? "<div class='spacer'></div>"
+                : MenuItemTemplate(menu);
 
-                if (page.Level > level)
-                {
-                    level++;
-                    NavBarTemplate += "<li><ol class=\"section\">";
-                }
+            var collapsibleParents = menu.GetAllParentCollapsible();
+            foreach (var collapsible in collapsibleParents)
+            {
+                NavBarCollapibleStyles += $".chapter:has([data-path='{collapsible.DataPath}'].collapsed) [data-path='{menu.DataPath}'] {{ display: none !important; }}"+Environment.NewLine;
+            }
 
-                if (page.Level < level)
-                {
-                    NavBarTemplate += string.Join("", Enumerable.Range(0, level - page.Level).Select(x => "</ol></li>"));
-                    level = page.Level;
-                }
-
-                NavBarTemplate += li;
+            foreach (var child in menu.Children)
+            {
+                RenderMenu(child);
             }
         }
 
-        private string NavbarItemTemplate(Page page) => $@"<li class=""chapter-item expanded"">
-    <a href=""{{{page.Id}Url}}"" {(page.Target.IsNotEmpty() ? "target='"+page.Target+"'" : "")}>"
-            + (page.IsCounted ? $@"<strong aria-hidden=""true"">{page.Number}.</strong>" : "")
-            + page.Name + @"
-    </a>
-</li>";
+        private string MenuItemTemplate(Menu item)
+        {
+            return $"""
+                <div class="chapter-item {(item.Type == MenuType.Collapsible ? "collapsible collapsed" : "")}" data-path="{item.DataPath}" data-level="{item.Level}">
+                    <{(item.Page != null ? $"a href='{{{item.Page.Id}Url}}'" : "span")}>{(item.Number.IsNotEmpty() ? $"<strong>{item.Number}.</strong>" : "")}{item.Text}</{(item.Page !=null ? "a" : "span")}>
+                    {(item.Type == MenuType.Collapsible ? "<span class='toggle'><i class='fa fa-angle-right'></i></span>" : "")}
+                </div>
+                """;
+        }
+
 
         public string Build(Page renderingPage)
         {
-            var result = NavBarTemplate.Replace("{" + renderingPage.Id + "Url}", @""" class=""active""");
+            var result = "<style>"+NavBarCollapibleStyles+"</style>"+
+                NavBarTemplate.Replace("{" + renderingPage.Id + "Url}'", "{" + renderingPage.Id + "Url}'"+@""" class=""active""");
+
+            if(renderingPage.Menu.Type== MenuType.Collapsible)
+            {
+                result = result.Replace($"collapsed\" data-path=\"{renderingPage.Menu.DataPath}\"", $"\" data-path=\"{renderingPage.Menu.DataPath}\"");
+            }
+
+            var collapsibleParents = renderingPage.Menu.GetAllParentCollapsible();
+            foreach (var collapsibleParent in collapsibleParents)
+            {
+                result = result.Replace($"collapsed\" data-path=\"{collapsibleParent.DataPath}\"", $"\" data-path=\"{collapsibleParent.DataPath}\"");
+            }
 
             foreach (var page in Book.Pages)
             {
-                if (page == renderingPage || page.Name.IsEmpty() || page.Path.IsEmpty())
-                    continue;
-
                 var url = GetRelativePath(renderingPage, page);
 
                 result = result.Replace("{" + page.Id + "Url}", url);

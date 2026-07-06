@@ -482,73 +482,8 @@ ul#searchresults span.teaser em {
     }
 }
 
-.chapter {
-    list-style: none outside none;
-    padding-inline-start: 0;
-    line-height: 2.2em;
-}
-
-.chapter ol {
-    width: 100%;
-}
-
-.chapter li {
-    display: flex;
-    color: var(--sidebar-non-existant);
-}
-.chapter li a {
-    display: block;
-    padding: 0;
-    text-decoration: none;
-    color: var(--sidebar-fg);
-}
-
-.chapter li a:hover {
-    color: var(--sidebar-active);
-}
-
-.chapter li a.active {
-    color: var(--sidebar-active);
-}
-
-.chapter li > a.toggle {
-    cursor: pointer;
-    display: block;
-    margin-inline-start: auto;
-    padding: 0 10px;
-    user-select: none;
-    opacity: 0.68;
-}
-
-.chapter li > a.toggle div {
-    transition: transform 0.5s;
-}
-
-/* collapse the section */
-.chapter li:not(.expanded) + li > ol {
-    /*display: none;*/
-}
-
-.chapter li.chapter-item {
-    line-height: 1.5em;
-    margin-block-start: 0.6em;
-}
-
-.chapter li.expanded > a.toggle div {
-    transform: rotate(90deg);
-}
-
-.spacer {
-    width: 100%;
-    height: 3px;
-    margin: 5px 0px;
-}
-.chapter .spacer {
-    background-color: var(--sidebar-spacer);
-}
-
 @media (-moz-touch-enabled: 1), (pointer: coarse) {
-    .chapter li a { padding: 5px 0; }
+    .chapter a { padding: 5px 0; }
     .spacer { margin: 10px 0; }
 }
 

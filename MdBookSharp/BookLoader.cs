@@ -16,7 +16,7 @@ namespace MdBookSharp
             var summarymd = "SUMMARY.md";
             var summaryPath = Path.Combine(path, summarymd);
 
-            var book = BookParser.Parse(path);
+            var book = SummaryParser.CsParse(path);
             book.ProjectPath = path;
             book.ProjectRootPath = rootpath;
             book.ProjectBinPath = Path.Combine(rootpath,book.Binpath);

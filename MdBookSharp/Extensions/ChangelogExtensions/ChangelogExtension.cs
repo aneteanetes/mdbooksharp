@@ -32,11 +32,14 @@ namespace MdBookSharp.Extensions.ChangelogExtensions
             };
 
             book.Pages.LastOrDefault()?.Next = changePage;
-            book.Pages.Add(new Page()
-            {
-                IsDelimiter=true
-            });
             book.Pages.Add(changePage);
+
+            book.Menu.Add(new Menu(book) { Type = MenuType.Delimiter });
+            book.Menu.Add(new Menu(book)
+            {
+                Page=changePage,
+                Text = this.Settings.ChangeLogMenuName,
+            });
         }
 
         private string GenerateMdChangelog()

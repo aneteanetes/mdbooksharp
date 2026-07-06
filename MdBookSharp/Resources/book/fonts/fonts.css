@@ -42,3 +42,7 @@ a {
   font-family: 'friz';
   color: #c5a100;
 }
+
+.chapter-item span {
+	font-family: 'friz';
+}

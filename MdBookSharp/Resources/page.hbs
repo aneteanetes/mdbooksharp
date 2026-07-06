@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ PathToRoot }}/css/variables.css">
     <link rel="stylesheet" href="{{ PathToRoot }}/css/general.css">
     <link rel="stylesheet" href="{{ PathToRoot }}/css/chrome.css">
+    <link rel="stylesheet" href="{{ PathToRoot }}/css/csbook.css">
     {{#if IsPrintEnable}}
     <link rel="stylesheet" href="{{ PathToRoot }}/css/print.css" media="print">
     {{/if}}
@@ -101,9 +102,9 @@
             <nav id="sidebar" class="sidebar" aria-label="Table of contents">
                 <!-- populated by js -->
                 <div class="sidebar-scrollbox">
-                    <ol class="chapter">
+                    <div class="chapter">
                         {{{ RenderedNavbar }}}
-                    </ol>
+                    </div>
                 </div>
                 <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                     <div class="sidebar-resize-indicator"></div>
@@ -236,6 +237,7 @@
             <script src="{{ PathToRoot }}/clipboard.js"></script>
             <script src="{{ PathToRoot }}/highlight.js"></script>
             <script src="{{ PathToRoot }}/book.js"></script>
+            <script src="{{ PathToRoot }}/csbook.js"></script>
 
             <!-- Custom JS scripts -->
             {{#each AdditionalJsFiles}}

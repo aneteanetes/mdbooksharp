@@ -11,6 +11,8 @@ namespace MdBookSharp.Books
     {
         private string DEBUGVIEW => Name == null ? "Delimiter" : $@"{Name} {Path}";
 
+        public Menu Menu { get; set; }
+
         public string IsActive { get; set; }
 
         public string Id => $"{Name}#{Path}";
@@ -76,6 +78,7 @@ namespace MdBookSharp.Books
         public HtmlDocument HtmlDocument { get; internal set; }
 
         public Page Parent { get; set; }
+
         public bool IsDelimiter { get; internal set; }
 
         public Book Book { get; set; }
