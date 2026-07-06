@@ -1,21 +1,17 @@
 # mdbooksharp
-Based on https://github.com/rust-lang/mdBook , but with `Lua injections` and `rewrited on c#`.
+Markdown book generator with **lua execution** and extensions pipeline.
 
-## License
-All the code in this repository is released under the ***Mozilla Public License v2.0***, for more information take a look at the [LICENSE] file.
+Based on https://github.com/rust-lang/mdBook , rewrited on c#.
 
 ## Usage
 Run as console with argument 'root of folder with src'. Other is very similar to **[User Guide]** of mdBook.
 
 ## Example
 Live example available: https://aneteanetes.github.io/nabtrpg/
+
 Repository: https://github.com/aneteanetes/nabtrpg 
 
 ## Differences
-mdbooksharp uses part of `mdBook` frontend files, but have full rewrited code of backend on C#.
-* .net backend
-* rewrited sidebar
-* rewrited search generation
 
 ### Summary.md
 SUMMARY.md file was reworked:
@@ -39,7 +35,7 @@ Symbols:
 * `---`: delimiter
 * `()`: link
 
-### Lua interop
+## Lua interop
 mdbooksharp has in-build lua execution engine. Lua injections available by `//%` and `//%()` sequences:
 * Set **ScriptsFolder** in extensions inside `settings.json`
 * All scripts inside folder will be load before generation
@@ -81,7 +77,7 @@ mdbooksharp use `settings.json` instead of `*.toml` files:
   * teaser_word_count
 * **Extensions** - all extensions have same settings hierarchy, see example below
 
-### Extensions pipeline
+## Extensions pipeline
 Extensions available via code-usage, but in-depth have access to: 
 * parsed html object
 * pure html text
@@ -104,4 +100,8 @@ Issues and pull-requests of any kind is appreciate.
 
 ## mdbook reference
 Original license https://github.com/rust-lang/mdBook/blob/master/LICENSE
+
 Original user guide: https://rust-lang.github.io/mdBook/
+
+## License
+All the code in this repository is released under the ***Mozilla Public License v2.0***, for more information take a look at the [LICENSE] file.
