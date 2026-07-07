@@ -11,7 +11,7 @@ namespace MdBookSharp
         {
             var rootpath = path;
 
-            path = Path.Combine(path, "src") + "\\";
+            path = Path.Combine(path, "src") + Path.DirectorySeparatorChar;
 
             var summarymd = "SUMMARY.md";
             var summaryPath = Path.Combine(path, summarymd);

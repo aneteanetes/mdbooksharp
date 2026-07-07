@@ -47,7 +47,7 @@ namespace MdBookSharp
             var commonPath = filePath.Replace(book.ProjectPath, "");
 
             if (commonPath.StartsWith("theme"))
-                commonPath = commonPath.Replace("theme\\", "");
+                commonPath = commonPath.Replace("theme"+ Path.DirectorySeparatorChar, "");
 
             return commonPath;
         }
