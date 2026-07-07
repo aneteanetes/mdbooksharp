@@ -82,7 +82,9 @@ namespace MdBookSharp
             ConsoleLog.WriteLine($"Copying embedded 'book' content...");
             foreach (var file in EmbeddedResources.GetEmbeddedFolder("book"))
             {
-                var path = Path.Combine(book.ProjectRootPath, book.Binpath, file.FileName);
+                string safeFileName = file.FileName.Replace('\\', Path.DirectorySeparatorChar);
+
+                var path = Path.Combine(book.ProjectRootPath, book.Binpath, safeFileName);
                 ValidateDirectory(path);
 
                 File.WriteAllBytes(path, file.Content.ToArray());
@@ -91,8 +93,9 @@ namespace MdBookSharp
             ConsoleLog.WriteLine($"Copying extensions content...");
             foreach (var file in EmbeddedResources.GetEmbeddedFolder("extensions.css"))
             {
-                Console.WriteLine(file);
-                var path = Path.Combine(book.ProjectRootPath, book.Binpath, file.FileName);
+                string safeFileName = file.FileName.Replace('\\', Path.DirectorySeparatorChar);
+
+                var path = Path.Combine(book.ProjectRootPath, book.Binpath, safeFileName);
                 ValidateDirectory(path);
 
                 File.WriteAllBytes(path, file.Content.ToArray());
