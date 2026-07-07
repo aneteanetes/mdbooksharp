@@ -153,7 +153,7 @@ namespace MdBookSharp
                     if (Path.GetExtension(file) == ".md")
                         continue;
 
-                    var path = Path.Combine(book.ProjectRootPath, book.Binpath, file.Replace(root, "").Replace("theme", "").Trim('\\'));
+                    var path = Path.Combine(book.ProjectRootPath, book.Binpath, file.Replace(root, "").Replace("theme", "").Trim(Path.PathSeparator));
                     ValidateDirectory(path);
                     try
                     {
