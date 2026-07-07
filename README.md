@@ -40,6 +40,7 @@ mdbooksharp has in-build lua execution engine. Lua injections available by `//%`
 * Set **ScriptsFolder** in extensions inside `settings.json`
 * All scripts inside folder will be load before generation
 * All lua code inside `//%()` and `//%` will be executed for each file
+* Works even in SUMMARY.md
 
 You can use https://github.com/aneteanetes/lua-syntax-injector in vs code for highlightin and autcomplete. 
 
@@ -54,6 +55,11 @@ All of `theme`  content copying into `bin` folder directly.
 
 ### Searching
 Search is available of `ru` and `en` by default. Can be customized via code.
+
+### Localization
+You can add locales by adding i18n file into /locales/{lang-code}.json in this repository.
+
+> Localization by locally files in progress.
 
 ### Settings
 mdbooksharp use `settings.json` instead of `*.toml` files:

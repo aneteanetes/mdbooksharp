@@ -1,5 +1,9 @@
 ﻿using Geranium.Reflection;
+using I18Next.Net;
+using Markdig;
 using MdBookSharp.Books;
+using MdBookSharp.Extensions;
+using MdBookSharp.Extensions.LuaScriptExtension;
 using MdBookSharp.Resources;
 using System.Text.Json;
 
@@ -7,7 +11,7 @@ namespace MdBookSharp
 {
     internal class BookLoader
     {
-        public static Book Load(string path, bool isDebug)
+        public static Book Load(string path, bool isDebug, LuaExtension lua, List<MdBookExtension> extensions)
         {
             var rootpath = path;
 
@@ -16,7 +20,7 @@ namespace MdBookSharp
             var summarymd = "SUMMARY.md";
             var summaryPath = Path.Combine(path, summarymd);
 
-            var book = SummaryParser.CsParse(path);
+            var book = new Book();
             book.ProjectPath = path;
             book.ProjectRootPath = rootpath;
             book.ProjectBinPath = Path.Combine(rootpath,book.Binpath);
@@ -29,20 +33,26 @@ namespace MdBookSharp
             if (File.Exists(settingsPath))
             {
                 using var stream = File.OpenRead(settingsPath);
-                book.Configuration = JsonSerializer.Deserialize<Configuration>(stream);
+                book.Settings = JsonSerializer.Deserialize<Configuration>(stream);
             }
 
-            if (book.Configuration.IsIncrementalBuild)
-                book.Configuration.IsClearFolder = false;
+            if (book.Settings.IsIncrementalBuild)
+                book.Settings.IsClearFolder = false;
 
-            if (isDebug && book.Configuration != null)
-                book.Configuration.Exceptions = isDebug;
+            if (isDebug && book.Settings != null)
+                book.Settings.Exceptions = isDebug;
+
+            // extensions load
+            ExtensionInitializer.Init(book, extensions);
+
+            ConsoleLog.WriteLine("Parse Summary...");
+            SummaryParser.CsParse(book, path, lua);
 
             ConsoleLog.WriteLine("Read/Write manifest...");
             var resultPath = Path.Combine(book.ProjectRootPath, book.Binpath);
             if (Directory.Exists(resultPath))
             {
-                if (book.Configuration.IsIncrementalBuild)
+                if (book.Settings.IsIncrementalBuild)
                 {
                     // read manifest
                     var manifestpath = Path.Combine(resultPath, "navbar.manifest");
@@ -58,7 +68,7 @@ namespace MdBookSharp
                         book.Manifest = JsonSerializer.Deserialize<Dictionary<string, string>>(manifestStream);
                     }
                 }
-                else if (book.Configuration.IsClearFolder)
+                else if (book.Settings.IsClearFolder)
                 {
                     Directory.Delete(resultPath, true);
                 }

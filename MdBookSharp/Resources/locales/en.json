@@ -1,0 +1,11 @@
+{
+  "sidebar": "Toggle Table of Contents",
+  "theme": "Change theme",
+  "theme_light": "Rust",
+  "theme_dark": "Navy",
+  "search": "Search",
+  "search_book": "Search this book...",
+  "print": "Print this book",
+  "back": "Previous chapter",
+  "next": "Next chapter"
+}

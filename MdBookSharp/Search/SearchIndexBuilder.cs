@@ -13,7 +13,7 @@ namespace MdBookSharp.Search
         {
             var idx = new SearchIndex();
 
-            var bookCfg = book.Configuration;
+            var bookCfg = book.Settings;
             if (bookCfg != null)
             {
                 if (bookCfg.SearchOptions != null)

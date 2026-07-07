@@ -1,18 +1,22 @@
 ﻿using Geranium.Reflection;
 using MdBookSharp.Books;
+using MdBookSharp.Extensions.LuaScriptExtension;
 
 namespace MdBookSharp
 {
     internal partial class SummaryParser
     {
-        public static Book CsParse(string path)
+        public static void CsParse(Book book, string path, LuaExtension lua)
         {
             ConsoleLog.WriteLine("Parsing summary.md...");
 
             var summaryPath = Path.Combine(path, "SUMMARY.md");
 
-            var content = File.ReadAllLines(summaryPath);
-            var book = new Book();
+            var summary = File.ReadAllText(summaryPath);
+
+            summary = lua.ProcessString(summary);
+
+            var content = summary.Split(Environment.NewLine);
             book.Title = content[0].Replace("#", "").Trim();
 
             Menu prevMenu = null;
@@ -127,8 +131,6 @@ namespace MdBookSharp
             }
 
             book.Pages = book.FlatMenu.Where(x => x.Page != null).Select(x => x.Page).ToList();
-
-            return book;
         }
 
         public static Book Parse(string path)

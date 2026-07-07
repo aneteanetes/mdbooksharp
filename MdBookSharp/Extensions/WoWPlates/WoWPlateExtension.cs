@@ -13,7 +13,7 @@ namespace MdBookSharp.Extensions.WoWPlates
             //not inversed for 'faster' check
             if (file.MdContent.Contains("</plate>"))
             {
-                var tokenExtSettings = file.Book.Configuration.GetExtensionSettings<ImageTokenExtensionSettings>();
+                var tokenExtSettings = file.Book.Settings.GetExtensionSettings<ImageTokenExtensionSettings>();
 
                 foreach (var plate in file.HtmlDocument.DocumentNode.Descendants("plate").ToArray())
                 {

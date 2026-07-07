@@ -11,8 +11,13 @@ namespace MdBookSharp.Extensions.LuaScriptExtension
 
         Script script;
 
+        private bool isInited = false;
+
         public override void Init(Book book, MarkdownPipeline pipeline)
         {
+            if (isInited)
+                return;
+
             script = new Script();
             var path = Path.Combine(book.ProjectPath, this.Settings.ScriptsFolder);
             var files = Directory.GetFiles(path, "*.lua", SearchOption.AllDirectories);
@@ -29,6 +34,8 @@ namespace MdBookSharp.Extensions.LuaScriptExtension
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
+
+            isInited = true;
         }
 
         public override void Process(Page file) { }
@@ -38,6 +45,27 @@ namespace MdBookSharp.Extensions.LuaScriptExtension
             var regex = VariableRegexp();
             string result = regex.Replace(md, match => {
                 string key = match.Value.Replace("//%", ""); 
+                try
+                {
+                    var val = script.DoString($"return {key}");
+                    var str = val.CastToString();
+                    return str;
+                }
+                catch (Exception ex)
+                {
+                    ConsoleLog.Error(key);
+                    throw;
+                }
+            });
+
+            return result;
+        }
+
+        public string ProcessString(string text)
+        {
+            var regex = VariableRegexp();
+            string result = regex.Replace(text, match => {
+                string key = match.Value.Replace("//%", "");
                 try
                 {
                     var val = script.DoString($"return {key}");

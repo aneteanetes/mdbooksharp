@@ -1,6 +1,7 @@
 ﻿using Geranium.Reflection;
 using HandlebarsDotNet;
 using HtmlAgilityPack;
+using I18Next.Net;
 using Markdig;
 using MdBookSharp.Books;
 using MdBookSharp.Extensions;
@@ -16,30 +17,9 @@ namespace MdBookSharp
         /// </summary>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        public static void Render(Book book, List<MdBookExtension> extensions)
+        public static void Render(Book book, List<MdBookExtension> extensions, I18NextNet i18n)
         {
             ConsoleLog.WriteLine("Rendering book...");
-
-            var pipelineBuilder = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
-                .UsePipeTables();
-            var pipeline = pipelineBuilder.Build();
-
-            foreach (var extension in extensions)
-            {
-                var cfgType = extension.GetSettingsType();
-                var extName = extension.GetType().Name;
-                if (book.Configuration.Extensions.ContainsKey(extName))
-                {
-                    var node = book.Configuration.Extensions[extName];
-                    var settings = node.Deserialize(cfgType);// JsonConvert.DeserializeObject(node.ToString(), cfgType);
-                    extension.BindSettings(settings);
-                    book.Configuration.SettingsDictionary.Add(cfgType, settings);
-                }
-                extension.Init(book, pipeline);
-            }
-
-            ConsoleLog.WriteLine("Extensions initialized...");
 
             foreach (var page in book.Pages)
             {
@@ -54,7 +34,7 @@ namespace MdBookSharp
                         }
                         catch (Exception)
                         {
-                            if (book.Configuration.Exceptions)
+                            if (book.Settings.Exceptions)
                             {
                                 throw;
                             }
@@ -65,7 +45,7 @@ namespace MdBookSharp
                         }
                     });
 
-                page.Html = Markdown.ToHtml(page.MdContent, pipeline);
+                page.Html = Markdown.ToHtml(page.MdContent, book.MarkdownPipeline);
 
                 var htmlDoc = new HtmlDocument();
                 htmlDoc.LoadHtml(page.Html);
@@ -78,7 +58,7 @@ namespace MdBookSharp
                     }
                     catch (Exception)
                     {
-                        if (book.Configuration.Exceptions)
+                        if (book.Settings.Exceptions)
                         {
                             throw;
                         }
@@ -93,20 +73,10 @@ namespace MdBookSharp
 
             ConsoleLog.WriteLine("Page rendering...");
 
-            RenderPages(book, extensions.Where(x=>x.IsGlobal));
+            RenderHandleBars(book, extensions.Where(x=>x.IsGlobal),i18n);
         }
 
-        /// <summary>
-        /// Рендер страниц в шаблон
-        /// </summary>
-        private static void RenderPages(Book book, IEnumerable<MdBookExtension> globalExtensions)
-        {
-            //CustomRenderer(book, globalExtensions);
-
-            RenderHandleBars(book, globalExtensions);
-        }
-
-        private static void RenderHandleBars(Book book, IEnumerable<MdBookExtension> globalExtensions)
+        private static void RenderHandleBars(Book book, IEnumerable<MdBookExtension> globalExtensions, I18NextNet i18n)
         {
             var template = EmbeddedResources.GetEmbeddedFileContent("page.hbs");
             var bindHtml = Handlebars.Compile(template);
@@ -142,9 +112,9 @@ namespace MdBookSharp
                     Prev = NavbarBuilder.GetRelativePath(page, page.Prev),
                     page.IsNextExists,
                     Next = NavbarBuilder.GetRelativePath(page, page.Next),
-                    book.Configuration.IsDev,
+                    book.Settings.IsDev,
                     book.DevRootPath,
-                    book.Language,
+                    book.Settings.Language,
                     book.DefaultTheme,
                     book.Title,
                     book.IsFaviconPng,
@@ -153,6 +123,15 @@ namespace MdBookSharp
                     book.ExtensionCssFiles,
                     book.AdditionalJsFiles,
                     book.IsPrintEnable,
+                    sidebar_l = i18n.T("sidebar"),
+                    theme_l = i18n.T("theme"),
+                    theme_light_l = i18n.T("theme_light"),
+                    theme_dark_l = i18n.T("theme_dark"),
+                    search_l = i18n.T("search"),
+                    print_l = i18n.T("print"),
+                    search_book_l = i18n.T("search_book"),
+                    back_l = i18n.T("back"),
+                    next_l = i18n.T("next")
                 });
 
                 foreach (var globalExt in globalExtensions)
@@ -163,7 +142,7 @@ namespace MdBookSharp
                     }
                     catch
                     {
-                        if (book.Configuration.Exceptions)
+                        if (book.Settings.Exceptions)
                         {
                             throw;
                         }

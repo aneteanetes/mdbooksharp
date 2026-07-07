@@ -139,18 +139,18 @@
                     <div id="menu-bar-hover-placeholder"></div>
                     <div id="menu-bar" class="menu-bar sticky">
                         <div class="left-buttons">
-                            <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Содержание" aria-label="Содержание" aria-controls="sidebar">
+                            <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="{{{ sidebar_l }}}" aria-label="{{{ sidebar_l }}}" aria-controls="sidebar">
                                 <i class="fa fa-bars"></i>
                             </label>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Тема" aria-label="Тема" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <button id="theme-toggle" class="icon-button" type="button" title="{{{ theme_l }}}" aria-label="{{{ theme_l }}}" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Светлая</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Тёмная</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">{{{ theme_light_l }}}</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">{{{ theme_dark_l }}}</button></li>
                                 <!--<li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>-->
                             </ul>
-                            <button id="search-toggle" class="icon-button" type="button" title="Поиск (ctrl+f)" aria-label="Поиск" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <button id="search-toggle" class="icon-button" type="button" title="{{{ search_l }}} (ctrl+f)" aria-label="{{{ search_l }}}" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
@@ -159,7 +159,7 @@
 
                         <div class="right-buttons">
                             {{#if IsPrintEnable}}
-                            <a href="{{ PathToRoot }}print.html" title="Печать" aria-label="Печать">
+                            <a href="{{ PathToRoot }}print.html" title="{{{ print_l }}}" aria-label="{{{ print_l }}}">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
                             {{/if}}
@@ -168,7 +168,7 @@
 
                     <div id="search-wrapper" class="hidden">
                         <form id="searchbar-outer" class="searchbar-outer">
-                            <input type="search" id="searchbar" name="searchbar" placeholder="Искать в правилах..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="{{{ search_book_l }}}" aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                         </form>
                         <div id="searchresults-outer" class="searchresults-outer hidden">
                             <div id="searchresults-header" class="searchresults-header"></div>
@@ -194,13 +194,13 @@
                         <nav class="nav-wrapper" aria-label="Page navigation">
                             <!-- Mobile navigation buttons -->
                             {{#IsPrevExists}}
-                            <a rel="prev" href="{{Prev}}" class="mobile-nav-chapters previous" title="Назад" aria-label="Назад" aria-keyshortcuts="Left">
+                            <a rel="prev" href="{{Prev}}" class="mobile-nav-chapters previous" title="{{{ back_l }}}" aria-label="{{{ back_l }}}" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                             {{/IsPrevExists}}
 
                             {{#IsNextExists}}
-                            <a rel="next prefetch" href="{{Next}}" class="mobile-nav-chapters next" title="Вперёд" aria-label="Вперёд" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="{{Next}}" class="mobile-nav-chapters next" title="{{{ next_l }}}" aria-label="{{{ next_l }}}" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                             {{/IsNextExists}}
@@ -212,13 +212,13 @@
 
                 <nav class="nav-wide-wrapper" aria-label="Page navigation">
                     {{#IsPrevExists}}
-                    <a rel="prev" href="{{Prev}}" class="nav-chapters previous" title="Назад" aria-label="Назад" aria-keyshortcuts="Left">
+                    <a rel="prev" href="{{Prev}}" class="nav-chapters previous" title="{{{ back_l }}}" aria-label="{{{ back_l }}}" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                     {{/IsPrevExists}}
 
                     {{#IsNextExists}}
-                    <a rel="next prefetch" href="{{Next}}" class="nav-chapters next" title="Вперёд" aria-label="Вперёд" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="{{Next}}" class="nav-chapters next" title="{{{ next_l }}}" aria-label="{{{ next_l }}}" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                     {{/IsNextExists}}

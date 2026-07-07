@@ -1,4 +1,5 @@
-﻿using MdBookSharp.Resources;
+﻿using Markdig;
+using MdBookSharp.Resources;
 using System.Diagnostics;
 
 namespace MdBookSharp.Books
@@ -24,8 +25,6 @@ namespace MdBookSharp.Books
 
         public string FaviconExt { get; set; }
 
-        public string Language { get; set; } = "ru";
-
         public List<Page> Pages { get; set; } = new();
 
         public List<Menu> Menu { get; set; } = new();
@@ -46,11 +45,14 @@ namespace MdBookSharp.Books
 
         public string DevRootPath { get; set; }
 
-        public Configuration Configuration;
+        public Configuration Settings;
 
         public bool IsNeedGenerateNavBar { get; set; } = true;
 
         public string ProjectBinPath { get; internal set; }
+
+        public MarkdownPipeline MarkdownPipeline { get; internal set; }
+
 
         public Dictionary<string, string> Manifest = new();
     }

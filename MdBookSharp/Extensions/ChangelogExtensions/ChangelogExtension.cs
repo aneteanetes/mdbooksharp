@@ -13,6 +13,9 @@ namespace MdBookSharp.Extensions.ChangelogExtensions
 
         public override void Init(Book book, MarkdownPipeline pipeline)
         {
+            if (this.Settings.FullChangesUrl.IsEmpty())
+                return;
+
             _pipeline = pipeline;
             var logPath = Path.Combine(book.ProjectPath, this.Settings.ChangeLogPath);
             using var stream = File.OpenRead(logPath);
@@ -60,6 +63,9 @@ namespace MdBookSharp.Extensions.ChangelogExtensions
 
         public override void Process(Page file)
         {
+            if (this.Settings.FullChangesUrl.IsEmpty())
+                return;
+
             if (file.MdContent.Contains("</changelog>"))
             {
                 var logTag = file.HtmlDocument.DocumentNode.Descendants("changelog").FirstOrDefault();

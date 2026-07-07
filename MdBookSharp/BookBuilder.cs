@@ -65,7 +65,7 @@ namespace MdBookSharp
                         }
                         catch (Exception)
                         {
-                            if (book.Configuration.Exceptions)
+                            if (book.Settings.Exceptions)
                             {
                                 throw;
                             }
@@ -102,7 +102,7 @@ namespace MdBookSharp
             }
 
             ConsoleLog.WriteLine($"Writing images...");
-            if (book.Configuration.IsIncrementalBuild)
+            if (book.Settings.IsIncrementalBuild)
             {
                 CopyImageThemeFilesByTracking(book);
             }
@@ -137,7 +137,12 @@ namespace MdBookSharp
         private static void CopyImagesAndThemeNOTIncremental(Book book)
         {
             ConsoleLog.WriteLine($"Copying images ...");
-            foreach (var image in Directory.GetFiles(Path.Combine(book.ProjectPath, "images"), ".", SearchOption.AllDirectories))
+            var imgpath = Path.Combine(book.ProjectPath, "images");
+
+            if (!Directory.Exists(imgpath))
+                return;
+
+            foreach (var image in Directory.GetFiles(imgpath, ".", SearchOption.AllDirectories))
             {
                 var path = Path.Combine(book.ProjectRootPath, book.Binpath, image.Replace(book.ProjectPath, ""));
                 ValidateDirectory(path);

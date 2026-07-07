@@ -6,6 +6,8 @@ namespace MdBookSharp.Books
 {
     internal class Configuration
     {
+        public string Language { get; set; } = "ru";
+
         public bool Exceptions { get; set; } = false;
 
         public bool IsClearFolder { get; set; } = true;

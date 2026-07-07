@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using Geranium.Reflection;
+using HtmlAgilityPack;
 using MdBookSharp.Books;
 
 namespace MdBookSharp.Extensions.NavbarImage
@@ -9,6 +10,9 @@ namespace MdBookSharp.Extensions.NavbarImage
 
         public override void Process(Page file)
         {
+            if (this.Settings.ImageAbsPath.IsEmpty())
+                return;
+
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(file.Content);
 

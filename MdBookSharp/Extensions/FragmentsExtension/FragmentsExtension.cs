@@ -12,7 +12,11 @@ namespace MdBookSharp.Extensions
 
         public override void Init(Book book, MarkdownPipeline pipeline)
         {
-            foreach (var file in Directory.GetFiles(Path.Combine(book.ProjectPath,"theme"), "*.html", SearchOption.AllDirectories))
+            var path = Path.Combine(book.ProjectPath, "theme");
+            if (!Directory.Exists(path))
+                return;
+
+            foreach (var file in Directory.GetFiles(path, "*.html", SearchOption.AllDirectories))
             {
                 var content = File.ReadAllText(file);
                 fragments.Add(content);
