@@ -148,12 +148,14 @@ namespace MdBookSharp
 
             if (Directory.Exists(themePath))
             {
-                foreach (var file in Directory.GetFiles(themePath, ".", SearchOption.AllDirectories))
+                foreach (var file in Directory.GetFiles(themePath, "*.*", SearchOption.AllDirectories))
                 {
                     if (Path.GetExtension(file) == ".md")
                         continue;
 
-                    var path = Path.Combine(book.ProjectRootPath, book.Binpath, file.Replace(root, "").Replace("theme", "").Trim(Path.PathSeparator));
+                    string relativePath = Path.GetRelativePath(themePath, file);
+
+                    var path = Path.Combine(book.ProjectRootPath, book.Binpath, relativePath);
                     ValidateDirectory(path);
                     try
                     {
