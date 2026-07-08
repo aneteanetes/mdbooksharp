@@ -46,7 +46,6 @@ jobs:
 
       # Step 5: load to GitHub Pages
       - name: Upload Pages Artifact
-        uses: actions/checkout@v4 # Re-verifying context check if output goes to /bin
         uses: actions/upload-pages-artifact@v3
         with:
           path: './bin'
