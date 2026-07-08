@@ -45,16 +45,8 @@ if (args.ElementAtOrDefault(1) != default)
     }
 }
 
-var backend = new EmbeddedJsonFileBackend();
-var translator = new DefaultTranslator(backend);
-var i18n = new I18NextNet(backend, translator)
-{
-    Language = "ru" // default lang
-};
-
 var book = BookLoader.Load(args[0], isDebug, luaExtension, extensions);
-i18n.Language = book.Settings.Language;
-BookRenderer.Render(book, extensions,i18n);
+BookRenderer.Render(book, extensions);
 BookBuilder.Build(book, extensions);
 
 double elapsedMs = Stopwatch.GetElapsedTime(ConsoleLog.started, Stopwatch.GetTimestamp()).TotalMilliseconds;

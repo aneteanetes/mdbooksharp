@@ -24,6 +24,7 @@ namespace MdBookSharp.Extensions
                     extension.BindSettings(settings);
                     book.Settings.SettingsDictionary.Add(cfgType, settings);
                 }
+
                 extension.Init(book, pipeline);
             }
 

@@ -4,7 +4,7 @@ using System.Text.Json.Nodes;
 
 namespace MdBookSharp.Books
 {
-    internal class Configuration
+    internal class BookSettings
     {
         public string Language { get; set; } = "ru";
 
@@ -18,7 +18,7 @@ namespace MdBookSharp.Books
 
         public ResultOptions SearchResultOptions { get; set; }
 
-        public Dictionary<string, JsonNode> Extensions { get; set; }
+        public Dictionary<string, JsonNode> Extensions { get; set; } = new();
 
         public bool IsDev { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Markdig;
+﻿using I18Next.Net;
+using Markdig;
 using MdBookSharp.Resources;
 using System.Diagnostics;
 
@@ -47,7 +48,7 @@ namespace MdBookSharp.Books
 
         public string DevRootPath { get; set; }
 
-        public Configuration Settings;
+        public BookSettings Settings;
 
         public bool IsNeedGenerateNavBar { get; set; } = true;
 
@@ -57,5 +58,7 @@ namespace MdBookSharp.Books
 
 
         public Dictionary<string, string> Manifest = new();
+
+        public I18NextNet i18n { get; set; }
     }
 }

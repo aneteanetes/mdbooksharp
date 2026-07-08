@@ -5,11 +5,11 @@ namespace MdBookSharp.Extensions.MDLinkToHtmlExtension
 {
     internal class MDLinkToHtmlExtension : MdBookExtension<MDLinkToHtmlExtensionSettings>
     {
-        public override void Process(Page file)
+        public override void Process(Page page)
         {
-            if (file.Html.Contains(".md"))
+            if (page.Html.Contains(".md)"))
             {
-                file.Html = file.Html.Replace(".md", ".html");
+                page.Html = page.Html.Replace(".md)", ".html)");
             }
         }
     }

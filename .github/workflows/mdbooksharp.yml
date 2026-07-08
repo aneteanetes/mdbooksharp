@@ -1,0 +1,57 @@
+name: Deploy Book to Pages using MdBookSharp Engine
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: download repository (contains both engine and book files)
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: install .NET 10
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          cache: true
+
+      # Step 3: compile mdbooksharp
+      - name: Build MdBookSharp Engine
+        run: |
+          dotnet build MdBookSharp/MdBookSharp.csproj -c Release -o ./engine-dist
+
+      # Step 4: generate by ${{ github.workspace }}
+      - name: Generate Book
+        run: |
+          dotnet ./engine-dist/MdBookSharp.dll "${{ github.workspace }}"
+
+      # Step 5: load to GitHub Pages
+      - name: Upload Pages Artifact
+        uses: actions/checkout@v4 # Re-verifying context check if output goes to /bin
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './bin'
+
+      # Step 6: publish to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

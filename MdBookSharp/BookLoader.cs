@@ -1,9 +1,10 @@
 ﻿using Geranium.Reflection;
 using I18Next.Net;
-using Markdig;
+using I18Next.Net.Plugins;
 using MdBookSharp.Books;
 using MdBookSharp.Extensions;
 using MdBookSharp.Extensions.LuaScriptExtension;
+using MdBookSharp.Localization;
 using MdBookSharp.Resources;
 using System.Text.Json;
 
@@ -33,7 +34,11 @@ namespace MdBookSharp
             if (File.Exists(settingsPath))
             {
                 using var stream = File.OpenRead(settingsPath);
-                book.Settings = JsonSerializer.Deserialize<Configuration>(stream);
+                book.Settings = JsonSerializer.Deserialize<BookSettings>(stream);
+            }
+            else
+            {
+                book.Settings = new BookSettings();
             }
 
             if (book.Settings.IsIncrementalBuild)
@@ -93,7 +98,37 @@ namespace MdBookSharp
                 book.ExtensionCssFiles[i].Path = book.ExtensionCssFiles[i].Path.Replace("\\", "/");
             }
 
+            var backend = new EmbeddedJsonFileBackend();
+            var translator = new DefaultTranslator(backend);
+            book.i18n = new I18NextNet(backend, translator)
+            {
+                Language = "en" // default lang
+            };
+
+            ProcessLocaleFiles(book);
+
+            book.i18n.Language = book.Settings.Language;
+
             return book;
+        }
+
+        private static void ProcessLocaleFiles(Book book)
+        {
+            var localePath = Path.Combine(book.ProjectPath, "locales");
+
+            if (!Directory.Exists(localePath))
+                return;
+
+            var localFilePath = Path.Combine(localePath, book.Settings.Language + ".json");
+            if (!File.Exists(localFilePath))
+            {
+                book.Settings.Language = "en";
+                return;
+            }
+
+            var backend = new BookJsonBackend(localePath);
+            var translator = new DefaultTranslator(backend);
+            book.i18n = new I18NextNet(backend, translator);
         }
 
         private static void ProcessAdditionalFiles(Book book)

@@ -17,7 +17,7 @@ namespace MdBookSharp
         /// </summary>
         /// <param name="extensions"></param>
         /// <returns></returns>
-        public static void Render(Book book, List<MdBookExtension> extensions, I18NextNet i18n)
+        public static void Render(Book book, List<MdBookExtension> extensions)
         {
             ConsoleLog.WriteLine("Rendering book...");
 
@@ -73,10 +73,10 @@ namespace MdBookSharp
 
             ConsoleLog.WriteLine("Page rendering...");
 
-            RenderHandleBars(book, extensions.Where(x=>x.IsGlobal),i18n);
+            RenderHandleBars(book, extensions.Where(x=>x.IsGlobal));
         }
 
-        private static void RenderHandleBars(Book book, IEnumerable<MdBookExtension> globalExtensions, I18NextNet i18n)
+        private static void RenderHandleBars(Book book, IEnumerable<MdBookExtension> globalExtensions)
         {
             var template = EmbeddedResources.GetEmbeddedFileContent("page.hbs");
             var bindHtml = Handlebars.Compile(template);
@@ -123,15 +123,15 @@ namespace MdBookSharp
                     book.ExtensionCssFiles,
                     book.AdditionalJsFiles,
                     book.IsPrintEnable,
-                    sidebar_l = i18n.T("sidebar"),
-                    theme_l = i18n.T("theme"),
-                    theme_light_l = i18n.T("theme_light"),
-                    theme_dark_l = i18n.T("theme_dark"),
-                    search_l = i18n.T("search"),
-                    print_l = i18n.T("print"),
-                    search_book_l = i18n.T("search_book"),
-                    back_l = i18n.T("back"),
-                    next_l = i18n.T("next")
+                    sidebar_l = book.i18n.T("sidebar"),
+                    theme_l = book.i18n.T("theme"),
+                    theme_light_l = book.i18n.T("theme_light"),
+                    theme_dark_l = book.i18n.T("theme_dark"),
+                    search_l = book.i18n.T("search"),
+                    print_l = book.i18n.T("print"),
+                    search_book_l = book.i18n.T("search_book"),
+                    back_l = book.i18n.T("back"),
+                    next_l = book.i18n.T("next")
                 });
 
                 foreach (var globalExt in globalExtensions)

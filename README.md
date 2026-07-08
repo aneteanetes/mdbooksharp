@@ -3,6 +3,9 @@ Markdown book generator with **lua execution** and extensions pipeline.
 
 Based on https://github.com/rust-lang/mdBook , rewrited on c#.
 
+# Showcase
+Documentation available via [GitHub Pages](https://aneteanetes.github.io/mdbooksharp/)
+
 ## Usage
 Run as console with argument 'root of folder with src'. Other is very similar to **[User Guide]** of mdBook.
 
