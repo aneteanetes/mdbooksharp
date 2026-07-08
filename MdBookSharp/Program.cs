@@ -1,7 +1,4 @@
-﻿using I18Next.Net;
-using I18Next.Net.Backends;
-using I18Next.Net.Plugins;
-using MdBookSharp;
+﻿using MdBookSharp;
 using MdBookSharp.Extensions;
 using MdBookSharp.Extensions.ChangelogExtensions;
 using MdBookSharp.Extensions.Dices;
@@ -14,7 +11,6 @@ using MdBookSharp.Extensions.Searching;
 using MdBookSharp.Extensions.WowIcons;
 using MdBookSharp.Extensions.WoWPlates;
 using MdBookSharp.Extensions.WrappedTable;
-using MdBookSharp.Localization;
 using System.Diagnostics;
 
 ConsoleLog.WriteLine("Loading book...");
