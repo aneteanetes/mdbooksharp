@@ -80,6 +80,11 @@ namespace MdBookSharp
                     menu.Page.PathToRoot = menu.Page.PathToRoot.Substring(1);
                     menu.Page.PathPhysical = menu.Page.Path.Replace("./", path);
 
+                    if (!File.Exists(menu.Page.PathPhysical))
+                    {
+                        ConsoleLog.Error($"Page {menu.Page.Path} does not exists!");
+                    }
+
                     menu.Page.MdContent = File.ReadAllText(menu.Page.PathPhysical);
 
                     if (prev != null)
@@ -123,7 +128,17 @@ namespace MdBookSharp
                 {
                     var last = book.FlatMenu.LastOrDefault(x => x.Level == menu.Level - 1);
                     if (isCounted)
-                        menu.Number = last.GetNextChildNumber();
+                    {
+                        if (last != null)
+                        {
+                            menu.Number = last.GetNextChildNumber();
+                        }
+                        else
+                        {
+                            bookCounter++;
+                            menu.Number = bookCounter.ToString();
+                        }
+                    }
                     last.AddChild(menu);
                 }
 

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Geranium.Reflection;
+using System.Diagnostics;
 
 namespace MdBookSharp.Books
 {
@@ -8,6 +9,7 @@ namespace MdBookSharp.Books
         public Menu(Book book)
         {
             book.FlatMenuAdding(this);
+            Id = Guid.NewGuid().ToString().Split('-')[book.Random.Next(0, 5)];
         }
 
         private string DEBUGVIEW
@@ -33,9 +35,9 @@ namespace MdBookSharp.Books
             }
         }
 
-        public string Id { get; } = Guid.NewGuid().ToString().Split('-')[0];
+        public string Id { get; }
 
-        public string DataPath => Number ?? Id;
+        public string DataPath => Id;
 
         public string Text { get; set; }
 
@@ -68,7 +70,13 @@ namespace MdBookSharp.Books
 
         public Menu Parent { get; set; }
 
-        public string GetNextChildNumber() => $"{Number}.{_children.Count + 1}";
+        public string GetNextChildNumber()
+        {
+            if (Number.IsEmpty())
+                return $"{_children.Count + 1}";
+            else
+                return $"{Number}.{_children.Count + 1}";
+        }
 
         public List<Menu> GetAllParentCollapsible()
         {

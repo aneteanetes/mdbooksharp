@@ -7,6 +7,8 @@ namespace MdBookSharp.Books
     [DebuggerDisplay("{ProjectRootPath}")]
     internal partial class Book
     {
+        public Random Random { get; set; } = new Random();
+
         public string Title { get; set; }
 
         public string DefaultTheme { get; set; } = "rust";
