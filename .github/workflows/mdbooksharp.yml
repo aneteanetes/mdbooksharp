@@ -36,12 +36,12 @@ jobs:
       # Step 3: compile mdbooksharp
       - name: Build MdBookSharp Engine
         run: |
-          dotnet build MdBookSharp/MdBookSharp.csproj -c Release -o ./engine-dist
+          dotnet build mdbooksharp/mdbooksharp.csproj -c Release -o ./engine-dist
 
       # Step 4: generate by ${{ github.workspace }}
       - name: Generate Book
         run: |
-          dotnet ./engine-dist/MdBookSharp.dll "${{ github.workspace }}"
+          dotnet ./engine-dist/mdbooksharp.dll "${{ github.workspace }}"
 
       # Step 5: load to GitHub Pages
       - name: Upload Pages Artifact
