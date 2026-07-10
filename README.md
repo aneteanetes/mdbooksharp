@@ -1,4 +1,6 @@
 # mdbooksharp
+[![NuGet version](https://badge.fury.io/nu/mdbooksharplib.svg)](https://badge.fury.io/nu/mdbooksharplib)
+
 Markdown book generator with **lua execution** and extensions pipeline.
 
 Based on https://github.com/rust-lang/mdBook , rewrited on c#.

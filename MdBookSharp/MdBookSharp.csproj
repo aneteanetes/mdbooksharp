@@ -5,10 +5,14 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-	  <PublishSingleFile>true</PublishSingleFile>
-	  <SelfContained>true</SelfContained>
+	<PublishSingleFile>true</PublishSingleFile>
+	<SelfContained>true</SelfContained>
+	<JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+	<TrimMode>partial</TrimMode>
+	<AssemblyName>mdbooksharp</AssemblyName>
+	<RootNamespace>mdbooksharp</RootNamespace>
   </PropertyGroup>
-
+	
   <ItemGroup>
     <PackageReference Include="Geranium.Reflection" Version="2.1.4" />
     <PackageReference Include="Geranium.Toposort" Version="1.0.2" />
@@ -22,13 +26,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<None Remove="Resources\**" />
-		<EmbeddedResource Include="Resources\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Remove="Resources\EmbeddedResources.cs" />
-	  <EmbeddedResource Remove="Resources\ResourceTracker.cs" />
+	  <ProjectReference Include="..\mdbooksharplib\mdbooksharplib.csproj" />
 	</ItemGroup>
 
 </Project>

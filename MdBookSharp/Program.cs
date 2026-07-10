@@ -1,49 +1,17 @@
-﻿using MdBookSharp;
-using MdBookSharp.Extensions;
-using MdBookSharp.Extensions.ChangelogExtensions;
-using MdBookSharp.Extensions.Dices;
-using MdBookSharp.Extensions.ImageToken;
-using MdBookSharp.Extensions.LuaScriptExtension;
-using MdBookSharp.Extensions.MDLinkToHtmlExtension;
-using MdBookSharp.Extensions.NabPlateExtension;
-using MdBookSharp.Extensions.NavbarImage;
-using MdBookSharp.Extensions.Searching;
-using MdBookSharp.Extensions.WowIcons;
-using MdBookSharp.Extensions.WoWPlates;
-using MdBookSharp.Extensions.WrappedTable;
-using System.Diagnostics;
+﻿using Geranium.Reflection;
+using mdbooksharplib;
 
-ConsoleLog.WriteLine("Loading book...");
+var command = args.ElementAtOrDefault(0);
 
-var luaExtension = new LuaExtension();
-
-List<MdBookExtension> extensions = [
-    new ChangelogExtension(),
-    luaExtension,
-    new SearchExtension(),
-    new WoWPlateExtension(),
-    new WrappedTableExtension(),
-    new WoWIconExtension(),
-    new DiceExtension(),
-    new ImageTokenExtension(),
-    new MDLinkToHtmlExtension(),
-    new NavbarImageExtension(),
-    new NabPlateExtension(),
-    new FragmentsExtension(),
-];
-
-bool isDebug = false;
-if (args.ElementAtOrDefault(1) != default)
+if (command.IsEmpty())
 {
-    if(!bool.TryParse(args[1], out isDebug))
-    {
-        isDebug = false;
-    }
+    BookWizard.GenerateOrInit();
+} 
+else if (command == "init")
+{
+    BookWizard.Init(args.ElementAtOrDefault(1));
 }
-
-var book = BookLoader.Load(args[0], isDebug, luaExtension, extensions);
-BookRenderer.Render(book, extensions);
-BookBuilder.Build(book, extensions);
-
-double elapsedMs = Stopwatch.GetElapsedTime(ConsoleLog.started, Stopwatch.GetTimestamp()).TotalMilliseconds;
-Console.WriteLine($"Done... [{elapsedMs} ms]");
+else
+{
+    BookWizard.Generate(command);
+}

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="mdbooksharp/mdbooksharp.csproj" />
+  <Project Path="mdbooksharplib/mdbooksharplib.csproj" />
+</Solution>

@@ -1,26 +1,35 @@
 # Creating a book
 
-Once you have the `mdbooksharp`, you can use it to render a book.
+Once you have the `mdbooksharp`, you can use it to create and generate a book.
 
 ## Initializing a book
 
-mdbooksharp does **not** support *init* command, instead of it you need manually create book folder or use [mdbooksharp template](https://github.com/aneteanetes/mdbooksharp-template).
+mdbooksharp support **init** command:
 
-## Manually crate a book
-For manual creating you need:
-* Create root directory of your book 
-  * This directory **must** contains `src` folder
-* Create `SUMMARY.md` inside src
-  * First line with # is *required* 
-* Optionally create `settings.json` inside src
-  * This file must be inside src folder
-* Optionally create `images` directory inside src
-  * This directory contains images or other files
-* Optionally create `theme` directory inside src
-  * This directory contains `css`,`js`,`fonts`, etc
 
-## Create book from template
+You can init new book by CLI:
+```sh
+mdbooksharp.exe init {bookdirectory}
+``` 
+mdbooksharp will create [template](./template.md) in the directory.
+
+## Manually create book from template
 See [template](./template.md) page.
+
+## Generation a book
+For generation you can run mdbooksharp two ways:
+- put `mdbooksharp` near book folder and run without args
+- run `mdbooksharp` and pass *path_to_book_folder* as argument 
+
+## Smart creation and generation
+You can run `mdbooksharp.exe` without `init` command, and it will init or generate book near executable file.
+
+```sh
+/usr/ mdbooksharp
+## produce /usr/book
+/usr/ mdbooksharp
+## generate /usr/book/bin
+```
 
 ## Anatomy of a book
 
@@ -112,7 +121,7 @@ The first step is to build the output of the book.
 This can be done with the run `mdbooksharp` with **path to folder contains `src` directory** argument:
 
 ```sh
-dotnet {path to mdbook}/MdBookSharp(.dll || .exe) "/usr/mybook/"
+dotnet mdbooksharp "/usr/mybook/"
 ```
 
 This will generate a directory named `bin` inside `"/usr/mybook/"` which contains the HTML content of your book.

@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<PublishSingleFile>true</PublishSingleFile>
+		<SelfContained>true</SelfContained>
+		<JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+		<TrimMode>partial</TrimMode>
+		<AssemblyName>mdbooksharplib</AssemblyName>
+		<RootNamespace>mdbooksharplib</RootNamespace>
+
+		<Title>mdbooksharplib</Title>
+		<Description>Static book generator with Lua execution and extensions pipeline. Based on mdbook.</Description>
+		<PackageProjectUrl>https://aneteanetes.github.io/mdbooksharp/</PackageProjectUrl>
+		<Copyright>anete.anetes</Copyright>
+		<RepositoryUrl>https://github.com/anetegithub/mdbooksharp/</RepositoryUrl>
+		<AssemblyVersion></AssemblyVersion>
+		<FileVersion></FileVersion>
+		<IncludeSymbols>True</IncludeSymbols>
+		<Product />
+		<Authors>anete.anetes</Authors>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Version>2.1.0</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Geranium.Reflection" Version="2.1.4" />
+		<PackageReference Include="Geranium.Toposort" Version="1.0.2" />
+		<PackageReference Include="Handlebars.Net" Version="2.1.6" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.71" />
+		<PackageReference Include="I18Next.Net" Version="1.0.0" />
+		<PackageReference Include="Markdig" Version="0.39.1" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="9.0.0" />
+		<PackageReference Include="MoonSharp" Version="2.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Resources\**" />
+		<EmbeddedResource Include="Resources\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Remove="Resources\EmbeddedResources.cs" />
+		<EmbeddedResource Remove="Resources\ResourceTracker.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Resources\template\" />
+	</ItemGroup>
+
+</Project>

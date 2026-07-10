@@ -1,0 +1,12 @@
+{
+  "Language":"en",
+  "IsIncrementalBuild": false,
+  "SearchResultOptions": {
+    "limit_results":15    
+  },
+  "Extensions": {
+    "LuaExtension":{
+      "ScriptsFolder":"lua"
+    }
+  }
+}

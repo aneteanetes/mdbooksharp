@@ -10,4 +10,5 @@
   - [Localization](./additional/localization.md)
   - [Markdown](./additional/markdown.md)
 + [For developers]
-  [Extensions](./additional/extensions.md)
+  - [Code integration](./develop/integration.md)
+  - [Extensions](./develop/extensions.md)

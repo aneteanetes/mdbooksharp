@@ -17,6 +17,7 @@ It is good for creating script-based books. If you do not need lua scripts or de
 * [Extensions] provide custom page processing on all generation steps
 * [Lua] support for scripting without modifying `mdbookshap`
 * [Localization] by *i18n*
+* Integrated .NET solution
 
 This guide is an example of what mdbooksharp produces.
 mdbooksharp is used by the [Nabunassar TTRPG](https://aneteanetes.github.io/nabtrpg/).

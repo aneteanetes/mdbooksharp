@@ -4,12 +4,12 @@
         {
             "label": "mdbooksharp",
             "type": "shell",
-            "command": "${workspaceFolder}/mdbooksharp/bin/Debug/net10.0/win-x64/mdbooksharp.exe",
+            "command": "${workspaceFolder}/../mdbooksharp.exe",
             "args": [
                 "${workspaceFolder}"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/mdbooksharp/bin/Debug/net10.0/win-x64/"
+                "cwd": "${workspaceFolder}/../mdbooksharp/"
             },
             "group": {
                 "kind": "build",

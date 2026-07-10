@@ -28,9 +28,9 @@ The menu bar at the top of the page provides some icons for interacting with the
 
 | Icon | Description |
 |------|-------------|
-| <i class="fas fa-bars"></i> | Opens and closes the chapter listing sidebar. |
-| <i class="fas fa-paintbrush"></i> | Opens a picker to choose a different color theme. |
-| <i class="fas fa-magnifying-glass"></i> | Opens a search bar for searching within the book. |
+| <i class="fa fa-bars"></i> | Opens and closes the chapter listing sidebar. |
+| <i class="fa fa-paint-brush"></i> | Opens a picker to choose a different color theme. |
+| <i class="fa fa-search"></i> | Opens a search bar for searching within the book. |
 
 Tapping the menu bar will scroll the page to the top.
 
