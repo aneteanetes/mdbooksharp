@@ -7,7 +7,7 @@ Based on `mdbook` with rewrited backend.
 It is good for creating script-based books. If you do not need lua scripts or deep customization, better choose original [mdBook](https://rust-lang.github.io/mdBook/index.html){target=_blank}.
 
 > [!IMPORTANT]
-> Thanks to [mdbook](https://github.com/rust-lang/mdBook/){target=_blank}! Without them, this project could be exists!
+> Thanks to [mdbook](https://github.com/rust-lang/mdBook/){target=_blank}! Without them, this project wouldn't be exists!
 
 * Lightweight [Markdown] files
 * Integrated [search] (based on `mdbook`). 
