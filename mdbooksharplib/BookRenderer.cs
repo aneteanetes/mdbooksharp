@@ -50,6 +50,7 @@ namespace mdbooksharplib
                         }
                     });
 
+                page.MdDocument = Markdown.Parse(page.MdContent);
                 page.Html = Markdown.ToHtml(page.MdContent, book.MarkdownPipeline);
 
                 var htmlDoc = new HtmlDocument();

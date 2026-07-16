@@ -45,6 +45,12 @@ namespace mdbooksharplib
 
                 var menu = new Menu(book);
 
+
+                if (line.Contains(">"))
+                {
+                    menu.IsSidebarExpands = true;
+                }   
+
                 bool isCounted = line.Trim().StartsWith("-");
 
                 if (line.IndexOf("(") == -1)

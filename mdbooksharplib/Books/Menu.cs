@@ -41,6 +41,8 @@ namespace mdbooksharplib.Books
 
         public string Text { get; set; }
 
+        public bool IsSidebarExpands { get; set; }
+
         public MenuType Type { get; set; }
 
         private Page _page;

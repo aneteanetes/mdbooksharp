@@ -82,5 +82,25 @@ namespace mdbooksharplib.Books
         public bool IsDelimiter { get; internal set; }
 
         public Book Book { get; set; }
+
+        public MarkdownDocument MdDocument { get; set; }
+
+
+        private Dictionary<string, object> BoxingBag = new();
+
+        public bool SetObject<T>(T @object, string key)
+        {
+            return BoxingBag.TryAdd(key, @object);
+        }
+
+        public T GetObject<T>(string key)
+        {
+            if(BoxingBag.TryGetValue(key, out var obj))
+            {
+                return obj.As<T>();
+            }
+
+            return default;
+        }
     }
 }

@@ -77,7 +77,7 @@ Here's a example SUMMARY.md file with a basic usages:
 ---                                                               //delimiter
 + [Collapsed example](collapsed.md)                 //collapsed menu with page link
   -+ [Collapsed counted](counted.md)          //collapsed can be unlimited nested
-      [Some page](page.md)
+      ->[Some page](page.md)              // '>' at start will expand sidebar by page headers
 [Static text]
 + [Static collapsed]                         //static text can be collapsed
   [Otherside](page.md)

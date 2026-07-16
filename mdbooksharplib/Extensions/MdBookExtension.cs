@@ -30,9 +30,9 @@ namespace mdbooksharplib.Extensions
 
         public virtual string ProcessStaticHtml(string content) => content;
 
-        public abstract Type GetSettingsType();
+        public virtual Type GetSettingsType() => default;
 
-        public abstract void BindSettings(object settings);
+        public virtual void BindSettings(object settings) { }
 
         public virtual void Init(Book book, MarkdownPipeline pipeline) { }
 

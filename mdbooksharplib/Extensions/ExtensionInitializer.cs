@@ -22,6 +22,9 @@ namespace mdbooksharplib.Extensions
             foreach (var extension in extensions)
             {
                 var cfgType = extension.GetSettingsType();
+                if (cfgType == default)
+                    continue;
+
                 var extName = extension.GetType().Name;
                 if (book.Settings.Extensions.ContainsKey(extName))
                 {

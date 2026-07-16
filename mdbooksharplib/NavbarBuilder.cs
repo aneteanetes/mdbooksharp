@@ -1,4 +1,5 @@
 ﻿using Geranium.Reflection;
+using Markdig.Syntax;
 using mdbooksharplib.Books;
 
 namespace mdbooksharplib
@@ -54,15 +55,44 @@ namespace mdbooksharplib
                 <div class="chapter-item {(item.Type == MenuType.Collapsible ? "collapsible collapsed" : "")}" data-path="{item.DataPath}" data-level="{item.Level}">
                     <{(item.Page != null ? $"a href='{{{item.Page.Id}Url}}'" : "span")}>{(item.Number.IsNotEmpty() ? $"<strong>{item.Number}.</strong>" : "")}{item.Text}</{(item.Page !=null ? "a" : "span")}>
                     {(item.Type == MenuType.Collapsible ? "<span class='toggle'><i class='fa fa-angle-right'></i></span>" : "")}
-                </div>
+                    {item.Id}Submenu
+                    </div>
                 """;
         }
 
+        private string Submenu(Menu item)
+        {
+            if (!item.IsSidebarExpands)
+                return string.Empty;
+
+            var headers = item.Page.MdDocument.Descendants<HeadingBlock>();
+
+            var subsidebar = "<div class='page-headers-tree'>";
+
+            var i = 0;
+
+            foreach (HeadingBlock header in headers)
+            {
+                int level = header.Level;
+                if (level == 0)
+                    continue;
+
+                string text = header.Inline?.FirstChild?.ToString() ?? "";
+                var link = text.Replace(" ", "-");
+
+                subsidebar += $"<a href='#{link}' class='header-link {(i==0 ? "active":"")}' data-header-level='{level}'>{text}</a>" + Environment.NewLine;
+
+                i++;
+            }
+
+            return subsidebar + "</div>";
+        }
 
         public string Build(Page renderingPage)
         {
-            var result = "<style>"+NavBarCollapibleStyles+"</style>"+
-                NavBarTemplate.Replace("{" + renderingPage.Id + "Url}'", "{" + renderingPage.Id + "Url}'"+@""" class=""active""");
+            var result = "<style>" + NavBarCollapibleStyles + "</style>" +
+                NavBarTemplate.Replace("{" + renderingPage.Id + "Url}'", "{" + renderingPage.Id + "Url}'" + @" class=""active""")
+                .Replace(renderingPage.Menu.Id+"Submenu", Submenu(renderingPage.Menu));
 
             if(renderingPage.Menu.Type== MenuType.Collapsible)
             {
@@ -80,6 +110,23 @@ namespace mdbooksharplib
                 var url = GetRelativePath(renderingPage, page);
 
                 result = result.Replace("{" + page.Id + "Url}", url);
+            }
+
+            foreach (var menu in Book.Menu)
+            {
+                result = ClearMenu(result, menu);
+            }
+
+            return result;
+        }
+
+        private string ClearMenu(string result, Menu menu)
+        {
+            result = result.Replace(menu.Id + "Submenu", "");
+
+            foreach (var submenu in menu.Children)
+            {
+                result = ClearMenu(result, submenu);
             }
 
             return result;
